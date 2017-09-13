@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>COMP3007 Arquitetura e Organização de Computadores | Introdução</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/mystyle.css">
+    <script src="https://use.fontawesome.com/4cb0a616c1.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, inverse
+
+# COMP3007
+# Arquitetura e Organização de Computadores
+
+---
+
+.panel[.panel-danger[
+.panel-heading[
+# <i class="fa fa-exclamation" aria-hidden="true"></i> Disclaimer]
+.panel-body[
+Esta apresentação é um compilado de diversos materiais e inspirações de outros tantos que encontrei nestes anos lecionando a disciplina. **.high[É um material que de forma alguma deve ser utilizado como única fonte de estudos]**. Utilize as referências e os livros que constam na emenda do curso.
+
+A probabilidade de haver erros no texto é alto, pois o mesmo só é revisado por mim, que já possuo vicios do próprio texto, portanto, me desculpe e fico no aguardo de um alô com os pontos para correção.
+]
+]]
+
+---
+class: inverse, middle, center
+
+# Conceitos iniciais
+
+---
+## Conceitos iniciais
+
+- Computador é uma máquina que pode resolver problemas para as pessoas, executando instruções que lhe são dadas;
+- Um sequência de instruções descrevendo como realizar uma tarefa é chamada de programa;
+- Circuitos eletrônicos de cada computador podem reconhecer e executar diretamente um conjunto limitado de instruções simples, para o qual todos os programas deve ser convertidos antes que possam ser executados.
+- As instruções primitivas de um computador formam uma linguagem com a qual as pessoas podem se comunicar com ele;
+- Essa linguagem é denominada: linguagem de máquina.
+
+---
+## Processamento de dados
+
+- Um computador é uma máquina capaz de sistematicamente coletar, manipular e fornecer os resultados da manipulação de informações para um ou mais objetivos.
+- Por ser uma máquina composta de vários circuitos eletrônicos, foi chamado durante algum tempo de equipamento de PROCESSAMENTO ELETRÔNICO DE DADOS.
+
+
+---
+## Processamento de dados
+
+- Processamento de dados consiste, então, em uma série de atividades ordenadamente realizadas, com o objetivo de produzir um arranjo determinado de informações a partir de outras obtidas inicialmente.
+- A manipulação das informações coletadas no início da atividade chama-se PROCESSAMENTO; as informações iniciais usualmente determinadas DADOS.
+
+![](assets/img/sl02/fig01.png)
+
+---
+
+![](assets/img/sl02/fig02.png)
+
+---
+## Nível lógico digital
+
+- É o nível mais baixo;
+- **portas** ou **gates**;
+- Cada porta é composta de alguns transistores;
+- Um pequeno número de portas são combinadas para formar as memórias, registrados, etc…
+
+---
+## Nível de microarquitetura
+
+- Coleção de 8 a 32 registradores
+- Formam **memória local** e a **ULA - Unidade Lógica e Aritmética**
+- Os registrados estão conectados a ULA, formando um caminho de dados
+- ULA opera sobre os dados carregados nos registrados
+- O caminho de dados é controlado por um programa chamado microprograma, ou é controlado diretamente por hardware
+- Basicamente interpreta as instruções do nível 2
+
+---
+## Nível de arquitetura de instruções
+
+- **ISA - Instruction Set Architecture**;
+- Fabricantes publicam um manual explicando o conjunto de instruções da máquina.
+
+![](assets/img/sl02/isam68000.jpg)
+
+[Intel® 64 and IA-32 Architectures Developer's Manual: Vol. 1](https://www.intel.com/content/www/us/en/architecture-and-technology/64-ia-32-architectures-software-developer-vol-1-manual.html)
+
+---
+## Nível de máquina de sistema operacional
+
+- Nível híbrido (software e hardware);
+- Podemos executar dois ou mais programas simultaneamente e diversos outros recursos;
+- instruções do nível 3 e nível 2;
+
+---
+## Nível de linguagem Assembly
+
+- É uma forma simbólica para uma das linguagens subjacentes;
+- Maneira mais “fácil” de escrever para os níveis 1, 2 e 3;
+- O programa que realiza a tradução é denominado **assembler**
+
+```
+C000                  ORG  ROM+$0000 BEGIN MONITOR
+C000 8E 00 70 START   LDS  #STACK
+
+0013          RESETA  EQU  %00010011
+0013          CTLREG  EQU  %00010001
+
+```
+---
+## Nível de linguagem orientada a problema
+
+- Linguagens de alto nível (C/C++, Java, PHP,…);
+- Programas escritos nas linguagens nesse nível, são traduzidos para linguagens de nível 3 ou 4, por tradutores conhecidos como compiladores;
+
+---
+class: inverse, middle, center
+
+# Hardware .vsimg[![](assets/img/sl02/vs.png)] Software
+
+---
+## Hardware e Software
+
+Sendo uma máquina o computador é constituído de diversos componentes físicos, desde os menores na escala de nanômetro, como os transistores, resistores e capacitores chamados componentes eletrônicos.
+
+![](assets/img/sl02/hardsoft01.png)
+
+---
+## Hardware e Software
+
+Há outros componentes maiores como:
+- O tubo do monitor conhecido também por CRT(Tubo de Raios Catódicos);
+- Monitor LED, LCD;
+- Teclado;
+- Mouse;
+- Placas de circuito impresso;
+Em conjunto este componentes formam a parte conhecida como **HARDWARE**.
+
+![](assets/img/sl02/hardware.png)
+
+---
+## Hardware e Software
+
+- No entanto, se considerarmos apenas o hardware, este é um objeto sem qualquer atividade própria.
+- É necessário uma instrução ou comando para realizar uma específica atividade, por menor ou mais simples que seja.
+
+--
+
+**Exemplo:** O motor de um disco rígido inicia sua rotação após receber uma instrução específica definida pelo fabricante; o braço desse mesmo disco também se move pelas trilhas por força de instrução ou sequência de instruções.
+
+![](assets/img/sl02/hdd.jpeg)
+
+---
+## Hardware e Software
+
+Essas instruções que podem ser ordenadas de formas diferentes e consequentemente produzir resultados diferentes, foram denominadas de software.
+
+Conhecido genericamente como programas de computador.
+
+![](assets/img/sl02/hardsoft02.png)
+
+---
+## Hardware e Software
+
+O termo **hardware** é uma palavra da língua inglesa, que identifica ferramenta.
+
+  hard significa duro, rígido, é um elemento difícil de modificar manualmente, material físico.
+
+O termo **software** surgiu na época dos computadores, para indicar o elemento que comanda as atividades do hardware.
+
+o termo soft é o antônimo de hard e significa macio, é um elemento fácil de alterar.
+
+---
+class: inverse, middle, center
+
+# Breve Histórico
+
+---
+## Breve Histórico
+
+- Dispositivos “Manuais”
+- Dispositivos Mecânicos – Ábaco
+- Dispositivos Eletromecânicos – Mark I
+- Dispositivos Eletrônicos – Eniac
+- Computadores – equipamentos eletrônicos de processamento de dados
+  - Com válvulas ( primeira geração)
+  - Com Transistores ( segunda geração)
+  - Com circuitos Integrados ( terceira geração)
+  - Com Integração em larga escala(chips) (quarta geração)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+Antes de 3000aC as primeiras tentativas de calcular provavelmente surgiram através de comparação, onde o homem primitivo comparava seus “bens” com alguns objetos de referência sem se preocupar com a quantidade.
+
+![](assets/img/sl02/pintura-rupestre.jpg)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- Por exemplo: Cada ovelha do rebanho tinha uma pedra correspondente.
+
+![](assets/img/sl02/reidavi_canada_595_fotoedumoraes1.jpg)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- O conceito de efetuar cálculos com algum tipo de equipamento vem dos chineses, esses equipamentos eram chamados de **ábacos**.
+- Este dispositivo permitia a contagem de valores, tornando possível aos comerciantes registrar dados numéricos sobre suas colheitas.
+
+.pics[![](assets/img/sl02/abaco-china-Suan-Pan.gif)]
+
+---
+class: bg-pic
+background-image: url(assets/img/sl02/abaco-didatico.jpg)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+Entre 1610 e 1614, **John Napier** desenvolveu umas tabelas móveis de multiplicação feitas de marfim, denominada **Ossos de Napier (Napier’s bones)**.
+
+![](https://upload.wikimedia.org/wikipedia/commons/f/fb/An_18th_century_set_of_Napier%27s_Bones.JPG)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- Em 1621, o matemático inglês William Oughtred desenvolveu a Régua de Cálculo inspirada nas tabelas de Napier;
+- No ano de 1623, o matemático alemão Schickard inventou a 1ª máquina de calcular;
+- Entre 1642 e 1647, o matemático francês **Blaise Pascal** desenvolveu uma máquina de calcular capaz de somar e subtrair por meio de engrenagens mecânicas, com funcionamento semelhante ao odômetro de um carro, denominada **Pascaline**.
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Arts_et_Metiers_Pascaline_dsc03869.jpg/300px-Arts_et_Metiers_Pascaline_dsc03869.jpg)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Pascaline-CnAM_823-1-IMG_1506-black.jpg/1200px-Pascaline-CnAM_823-1-IMG_1506-black.jpg)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+No ano de 1671, o matemático alemão **Gottfried Von Leibnitz**, adicionou à Pascaline os recursos de multiplicação e divisão baseados na repetição dos processos de soma e subtração anteriormente desenvolvidos naquela máquina.
+
+![](http://history-computer.com/MechanicalCalculators/images/Leibniz_machine_without_cover.jpg)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+Em 1801, o matemático francês **Josef Marie Jacquard** introduziu o conceito de armazenamento de informações em placas perfuradas utilizadas em máquinas de tear.
+
+![](https://s-media-cache-ak0.pinimg.com/originals/c9/1a/23/c91a23f617c3cff2bea5e8002e94724c.jpg)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- Em 1820, o francês **Charles Thomas de Calmar** aperfeiçoou a máquina de Leibnitz e inventou a primeira máquina de calcular com sucesso comercial, denominada **Arithometer**. Em 30 anos, foram vendidas por volta de 1500 unidades.
+
+![](http://archive.computerhistory.org/resources/access/physical-object/2010/02/B243-82.01.01.lg.jpg)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- Entre 1823 e 1834, o inglês **Charles Babbage**, com o auxílio do governo, desenvolveu a **Máquina diferencial**.
+
+![](http://www.101101.io/babbage/3-1.jpg)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- Entre 1834 e 1871, **Charles Babbage** trabalhou em um ambicioso projeto, chamado de **Máquina analítica**, que nunca ficou pronto.
+- A tecnologia da época tornou o projeto caro e trabalhoso, impedindo o financiamento.
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/AnalyticalMachine_Babbage_London.jpg/1200px-AnalyticalMachine_Babbage_London.jpg)
+
+---
+class: bg-pic
+background-image: url(assets/img/sl02/ada01.png)
+
+---
+class: bg-pic
+background-image: url(assets/img/sl02/ada02.png)
+
+---
+class: bg-pic
+background-image: url(assets/img/sl02/ada03.png)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- Em 1854, baseado nos projetos de Babbage, **George Boole** desenvolveu a **álgebra booleana**;
+- Este paradigma matemático, que deu ênfase a **notação binária** em vez da tradicional notação decimal, estabeleceu os princípios binários utilizados atualmente nos computadores.
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- Com a invenção do motor elétrico no fim do século XIX, surgiu uma grande quantidade de máquinas de somar acionadas por motores elétricos baseados no princípio de funcionamento da máquina de Pascal.
+- Em 1889, **Herman Hollerith** desenvolveu o cartão perfurado para guardar dados e uma máquina tabuladora mecânica, acionado por um motor elétrico.
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/HollerithMachine.CHM.jpg/1200px-HollerithMachine.CHM.jpg)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- No ano de 1880, o matemático especializado em estatística Hermann Hollerith, modificou o sistema de Jacquard para desenvolver um método de contagem automática dos dados levantados pelo Census Bureau, nos Estados Unidos.
+- O processo de cartões perfurados reduziu em um terço o tempo necessário para contagem do censo americano. O sucesso da máquina motivou Hollerith a comercializá-la.
+- Em 1896, fundou a **Tabulating Machine Company (TMC)**, que em 1911 associou-se a outras companhias. Em 1914, **Thomas Watson** assume a direção da TMC e em 1924 a TMC passa a chamar-se **IBM**.
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- Em 1890, o bancário e contador **William S. Burroughs** iniciou a produção de uma calculadora mecânica que imprimia as parcelas e os resultados.
+- Era vendida inicialmente pela **American Arithometer Company**, que mudou de nome, vindo a chamar-se **Burroughs Company**. Em 1986 uniu-se com a **Univac** e transformou-se na **Unisys**.
+
+![](http://public.beuth-hochschule.de/hamann/burroughs/burro5/burro5.jpg)
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- Em 1935, o alemão **Konrad Zuse** desenvolveu a primeira calculadora eletrônica.
+- No ano de 1936 o matemático inglês **Alan Mathison Turing** desenvolveu a teoria da máquina universal, capaz de resolver qualquer cálculo arbitrário desde que carregada com um programa pertinente. A máquina ficou conhecida como **Máquina de Turing**.
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- Em 1941, Konrad Zuze construiu o Z3, que foi o primeiro computador eletromecânico. Esta máquina marcou o que chamamos de Geração Zero dos computadores.
+- Zuse não conhecia o trabalho de Babbage, e suas máquinas foram destruídas pelo bombardeio aliado de Berlim em 1944.
+
+---
+## Época dos dispositivos mecânicos (3000 a.C. a ~1880)
+
+- **Howard Aiken** descobriu o trabalho de Babbage na biblioteca, resolveu construir a máquina de rodas dentadas utilizando relés;
+- Em 1944, construiu um computador eletromecânico, conferindo esta tecnologia também para os Estados Unidos. A máquina chamava-se MARK I;
+- Tinha 72 palavras de 23 algarismos decimais cada e tempo de instrução de 6 s.
+
+---
+class: center, middle
+
+# [Harvard Mark I](http://youtu.be/4ObouwCHk8w)
+
+---
+class: center, middle, inverse
+
+# A primeira geração - válvulas (1945 ~ 1955)
+
+---
+class: bg-pic
+background-image: url(https://peopledotcom.files.wordpress.com/2016/08/iwo-jima-0-800.jpg)
+
+---
+## A primeira geração - válvulas (1945 ~ 1955)
+
+![](assets/img/sl02/enigma01.png)
+
+---
+## A primeira geração - válvulas (1945 ~ 1955)
+
+![](assets/img/sl02/enigma02.png)
+
+---
+## A primeira geração - válvulas (1945 ~ 1955)
+
+![](assets/img/sl02/enigma03.png)
+
+---
+class: bg-pic
+background-image: url(http://www.telegraph.co.uk/content/dam/business/spark/boeing-better-future/collosus-computer-large.jpg)
+
+---
+## A primeira geração - válvulas (1945 ~ 1955)
+
+### **ENIAC**
+** Eletronic Numerical Integrator Analyser and Computer**
+- Desenvolvido em 1946 por John Mauchly e Pesper Eckert na universidade da Pensilvânia.
+- Esta máquina se notabilizou por ser o primeiro computador genuinamente eletrônico e também pelas suas exageradas dimensões.
+  - Tamanho: 170m2;
+  - Peso: 30 toneladas;
+  - 18000 válvulas;
+  - 10000 capacitores;
+  - 1500 relés;
+  - milhares de resistores e relés;
+  - Consumia 140 kw.
+
+---
+class: bg-pic
+background-image: url(https://www.jasperpickenscountyga.com/wp-content/uploads/2013/03/computer-6.jpg)
+
+---
+class: bg-pic
+background-image: url(http://www.hnf.de/uploads/tx_templavoila/52_53_2.jpg)
+
+---
+## A primeira geração - válvulas (1945 ~ 1955)
+
+### **ENIAC**
+- 5000 adições ou subtrações por segundo;
+- 20 registradores com capacidade para armazenar um número decimal de 10 dígitos, cada um;
+- Programação feita por fios, alterando a estrutura da própria máquina.
+- Custo do equipamento: $500.000,00 da época.
+- Esta máquina marcou o início da geração de computadores construídos com válvulas, muito mais rápidas que o sistema eletromecânico utilizado na geração zero.
+
+---
+## A primeira geração - válvulas (1945 ~ 1955)
+
+O ENIAC inaugurou a Primeira Geração de Computadores, e as características desta geração eram:
+- máquinas com armazenamento interno de dados e instruções;
+- sistema operacional manual (os técnicos tinham de cuidar de todo o funcionamento básico da máquina);
+- poucos recursos de programação (utilização de linguagem de máquina);
+- armazenamento em cartões perfurados e início do armazenamento em tambores magnéticos.
+
+---
+## A primeira geração - válvulas (1945 ~ 1955)
+
+### **EDVAC**
+ **Electronic Discrete Variable Automatic Computer** (1947)
+
+Mauchly e Eckert construiram um outro computador electrónico que permitia armazenar na memória qualquer programa e constituisse um multipurpose computer. A memória do EDVAC era construída com lâmpadas de mercúrio (mercury delay lines). Excitando uma lâmpada de mercúrio com um impulso elétrico este poderia ser enviado para a frente e para trás de modo a ser lido sob a forma de 0 ou 1.
+
+![](https://videogamehistorian.files.wordpress.com/2014/04/978.jpg)
+
+---
+## A primeira geração - válvulas (1945 ~ 1955)
+
+No período entre 1945 e 1950 - **John Von Neumann**, **Burks** e **Herman Goldstine** desenvolveram a lógica dos circuitos, os conceitos de programação, operações com números binários e o conceito de que tanto instruções como os dados podiam ser armazenados e manipulados internamente.
+
+---
+## A primeira geração - válvulas (1945 ~ 1955)
+
+Estes conceitos estão presentes em todos os computadores construídos desde aquela época.
+
+![](assets/img/sl02/arq-von-neuman.png)
+
+---
+class: inverse, middle, center
+
+# A segunda geração - transistores (1955 ~ 1965)
+
+---
+## A segunda geração - transistores (1955 ~ 1965)
+
+- Transistor foi inventado no Bell Labs em 1948;
+- John Bardeen, Walter Brattain e Willian Shockley;
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Replica-of-first-transistor.jpg/220px-Replica-of-first-transistor.jpg)
+
+---
+class: middle, center
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IcrBqCFLHIY" frameborder="0" allowfullscreen></iframe>
+
+---
+class: middle, center
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/7ukDKVHnac4" frameborder="0" allowfullscreen></iframe>
+
+---
+## A segunda geração - transistores (1955 ~ 1965)
+
+O transistor inaugura a Segunda Geração de Computadores que possuem as seguintes características:
+- aumento na capacidade do armazenamento interno de dados e instruções;
+- sistema operacional com um certo grau de automação;
+- médios recursos de programação (surgimento de linguagens de programação de alto nível como Cobol - utilizado em aplicações comerciais e Fortran - empregado em aplicações científicas);
+- armazenamento em cartões perfurados e início do armazenamento em discos magnéticos.
+
+---
+## A segunda geração - transistores (1955 ~ 1965)
+
+**TX-0 (Transistorized eXperimental computer 0)**
+- Máquina de 16 bits;
+- Teste para o TX-2;
+
+![](http://images.computerhistory.org/pdp-1/TX-0.computer_room.102631256.lg.jpg)
+
+---
+## A segunda geração - transistores (1955 ~ 1965)
+
+**TX-2**
+
+![](http://s7.computerhistory.org/is/image/CHM/102652182-03-01?$re-zoomed$)
+
+---
+## A segunda geração - transistores (1955 ~ 1965)
+
+- Apenas em 1961, a DEC apresentou o PDP-1;
+- Tinha 4096 palavras de 18 bits;
+- executava 200 mil instruções por segundo;
+- custava 120 milhões, na época;
+- tela de 512 x 512
+
+---
+## A segunda geração - transistores (1955 ~ 1965)
+
+## PDP-1
+
+![](http://history-computer.com/ModernComputer/Electronic/Images/PDP-1.jpg)
+
+---
+## A segunda geração - transistores (1955 ~ 1965)
+
+## PDP-8
+- Apresentou o omnibus, barramento único;
+- máquina de 12 bits.
+
+![](https://upload.wikimedia.org/wikipedia/commons/6/6d/PDP-8.jpg)
+
+---
+class: inverse, middle, center
+
+# A terceira geração - circuitos integrados (1965 ~ 1980)
+
+---
+## A terceira geração - circuitos integrados (1965 ~ 1980)
+
+Com a descoberta do **circuito integrado de silício** por **Jack Kilby** e **Robert Noyce**, permitiu que dezenas de transistores fossem colocados em um **único chip**;
+
+Neste contexto, a IBM tinha duas totalmente incompatíveis
+- IBM 7094 e IBM 1401;
+- Família System/360;
+
+---
+class: bg-pic
+background-image: url(assets/img/sl02/ibm7094-1401.png)
+
+---
+class: bg-pic
+background-image: url(http://www-03.ibm.com/ibm/history/ibm100/images/icp/T114212C01873C04/us__en_us__ibm100__system_360__360genrl__620x350.jpg)
+
+---
+## A terceira geração - circuitos integrados (1965 ~ 1980)
+
+## System/360
+
+![](assets/img/sl02/ibmsystem360.png)
+
+---
+class: inverse, middle, center
+
+# A quarta geração - Very Large Scale Integration (1980 ~)
+
+---
+## A quarta geração - Very Large Scale Integration (1980 ~)
+
+Computadores pessoais vendidos como kits, para entusiastas construírem o próprio computador pessoal;
+
+Kits continham uma placa de circuito impresso, um punhado de chips, cabos, fonte de energia, disco flexível, intel 8080.
+
+![](http://img.labnol.org/di/apple-mac-computers.jpg)
+
+---
+## A quarta geração - Very Large Scale Integration (1980 ~)
+
+## x86
+
+- x86 ou 80x86 é o nome genérico dada à família (arquitetura) de processadores baseados no Intel 8086, da Intel Corporation.
+- Quando se diz que é um processador de 16 bits, quer-se dizer que a sua unidade lógica e aritmética, os seus registradores internos, e a maior parte das suas instruções foram concebidos para trabalhar com palavras de 16 bits.
+
+---
+## A quarta geração - Very Large Scale Integration (1980 ~)
+
+## ARM (Advanced RISC Machine)
+
+- Arquitetura de processador de 32 bits usada principalmente em sistemas embarcados.
+- Processadores que visam a simplificação das instruções, com o intuito de atingir a máxima eficiência por ciclo, podendo realizar tarefas menores com ciclos mais curtos, e uma maior ordenação das operações dentro do núcleo de processamento.
+- São encontrados em PDAs, telefones celulares, calculadoras, periféricos de computador, equipamentos POS e aplicações industriais.
+
+---
+## A quarta geração - Very Large Scale Integration (1980 ~)
+
+## AVR
+
+- desenvolvido pela Atmel em 1996
+- é um microcontrolador RISC de chip único com uma arquitetura Harvard modificada de 8-bit
+- um dos primeiros da família de microcontroladores a utilizar uma memória flash com o intuito de armazenar a programação
+
+---
+class: inverse, middle, center
+
+# A quinta geração - ???
+# (atualmente)
+
+---
+## A quinta geração - ???
+
+- Muito se discute sobre a quinta geração;
+- Alguns dizem sobre a computação móvel;
+- Mudança de paradigmas;
+- Computação ubíqua ou computação pervasiva;
+
+---
+
+Maiores informações e curiosidades sobre a história da computação, acessem:
+
+[![](http://www.dicasdosergio.com.br/wp-content/uploads/2011/10/Computer-History-Museum-Logo.jpg)](http://www.computerhistory.org)
+
+---
+class: inverse, middle, center
+
+# Classificação
+
+---
+## Classificação
+
+![](assets/img/sl02/tab-classificacao.png)
+
+---
+## Classificação
+
+- **Supercomputador** – um computador com altíssima velocidade de processamento e grande capacidade de memória, empregado em pesquisas científicas e militares.
+- **Mainframes** – grande porte
+- **Minicomputadores** – médio porte
+- **Microcomputadores** – pequeno porte
+- **Dispositivos móveis**
+
+---
+## Supercomputador
+
+![](https://fossbytes.com/wp-content/uploads/2015/06/Titan-Supercomputer.jpg)
+
+---
+## Mainframes
+
+Um mainframe é um computador de grande porte dedicado normalmente ao processamento de um volume enorme de informações. O termo mainframe era utilizado para se referir ao gabinete principal que alojava a unidade central de processamento nos primeiros computadores.
+
+![](http://blog.syncsort.com/wp-content/uploads/2014/07/Syncsort_mainframe_offload.png)
+
+---
+## Computador pessoal
+
+![](assets/img/sl02/desktops.png)
+
+---
+## Consoles
+
+![](http://viageek.com.br/wp-content/uploads/2015/12/untitled-copiar.jpg)
+
+---
+## Dispositivos móveis
+
+![](http://www.clickipa.com/uploads/subcategory/Mobile%20Phones3.jpg)
+
+---
+## Microcontroladores
+
+![](assets/img/sl02/microcontroladores.png)
+
+---
+## Wearables
+
+![](https://tctechcrunch2011.files.wordpress.com/2015/06/wearables.jpg)
+
+---
+## Descartaveis
+
+![](assets/img/sl02/descartaveis.png)
+
+---
+class: bg-pic
+background-image: url(http://i.giphy.com/upg0i1m4DLe5q.gif)
+
+
+    </textarea>
+    <script src="../assets/js/remark.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

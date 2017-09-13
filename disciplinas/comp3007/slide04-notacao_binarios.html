@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>COMP3007 Arquitetura e Organização de Computadores | Conceitos iniciais</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/mystyle.css">
+    <script src="https://use.fontawesome.com/4cb0a616c1.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, inverse
+
+# COMP3007
+# Arquitetura e Organização de Computadores
+
+---
+
+.panel[.panel-danger[
+.panel-heading[
+# <i class="fa fa-exclamation" aria-hidden="true"></i> Disclaimer]
+.panel-body[
+Esta apresentação é um compilado de diversos materiais e inspirações de outros tantos que encontrei nestes anos lecionando a disciplina. **.high[É um material que de forma alguma deve ser utilizado como única fonte de estudos]**. Utilize as referências e os livros que constam na emenda do curso.
+
+A probabilidade de haver erros no texto é alto, pois o mesmo só é revisado por mim, que já possuo vicios do próprio texto, portanto, me desculpe e fico no aguardo de um alô com os pontos para correção.
+]
+]]
+
+---
+class: inverse, middle, center
+
+# Conceitos iniciais
+
+---
+## Conceitos iniciais
+
+- O primeiro computador surgiu com os mesmos componentes necessários para se realizar com sucesso as etapas de processamento de dados:
+  * Processador
+  * Sistema de Entrada e Saída (E/S ou I/O)
+
+---
+## Conceitos iniciais
+
+**John Von Neumann** aperfeiçoou de forma considerável aquela arquitetura inicial, acrescentando um elemento (componente) fundamental:
+- **memória** – um componente para armazenar tanto programas quanto dados.
+
+---
+## Conceitos iniciais
+
+![](assets/img/sl03/fig01.png)
+
+---
+# Onde os programas são guardados e quem executa suas instruções?
+
+--
+
+- Os programas e informações são guardadas em memórias.
+- E a execução dos mesmos é feita na CPU
+
+--
+
+![](assets/img/sl03/fig02.png)
+
+---
+## Conceitos iniciais
+
+Em resumo, os componentes básicos de um sistema de computação são:
+* Processador (CPU)
+* Memória
+* Componentes de E/S
+
+---
+class: center, middle
+
+# Como é que a CPU se comunica com o resto do computador?
+
+---
+## Conceitos iniciais
+
+![](assets/img/sl03/fig03.png)
+
+---
+class: inverse, middle, center
+
+# Barramentos de sistema
+
+---
+## Barramentos de sistema
+
+São as linhas de comunicação que interligam os principais componentes do computador, como CPU, memória principal, dispositivos de Entrada e Saída e memória auxiliar;
+
+Há 3 barramentos de sistema:
+- Dados;
+- Controle;
+- Endereços.
+
+---
+## Barramentos de sistema
+
+**Barramento de Dados:** usado para transferir os dados e as instruções usados pelos programas.
+
+**Barramento de endereços:** usado para transferir os endereços das posições (áreas) da memória principal a serem acessadas pela CPU e demais dispositivos.
+
+**Barramento de Controle:** Usado para transferir os sinais que controlam e sincronizam os componentes do computador.
+
+---
+## Barramentos de sistema
+
+![](assets/img/sl03/fig04.png)
+
+---
+## Barramentos de sistema
+
+### Barramento de Controle (BC)
+
+Trata-se de um conjunto de fios condutores, onde cada um tem uma independência funcional, seja na direção do fluxo de sinal, memória principal (MP) para CPU ou vice versa, ou seja no instante em que o sinal surge no fio correspondente.
+
+---
+## Barramentos de sistema
+
+### Barramento de Endereço (BE)
+
+Possui uma característica marcante, a largura L, que consiste na quantidade de bits. Quanto maior a largura de L, maior a quantidade de endereços que podem ser usados no referido sistema, ou seja, a capacidade da memória, visto que:
+
+$$
+N = 2^L
+$$
+Sendo:
+- N = quantidade de endereços
+- L = quantidade de bits do BE
+
+---
+## Barramentos de sistema
+
+### Barramento de Endereço (BE)
+
+**Exemplo 1:**
+
+Se \\( L = 6 \\) bits, significa que o BE possui 6 fios e cada endereço utilizado é um número de 6 bits, seja o primeiro endereço (endereço 0 decimal ou `000000` binário) ou o último endereço (`111111` em binário ou 63 em decimal). Ou seja, 64 endereços, desde 0 até 63, ou \\( N = 2^L = 2^6 = 64 \\).
+
+---
+## Barramentos de sistema
+
+### Barramento de Endereço (BE)
+
+**Exemplo 2:**
+
+Considerar um processador que possua 10 pinos para enviar endereços para o BE. Qual deverá ser a máxima capacidade de endereçamento deste sistema?
+
+--
+
+\\( N = 2^L = 2^{10} = 1024 \\) endereços
+
+Vai do endereço 0 até o endereço 1023.
+
+---
+## Barramentos de sistema
+
+### Barramento de Dados (BD)
+
+Como o Barramento de Dados (BD) é um conjunto de fios que serve como transporte dos sinais elétricos correspondentes aos bits de dados, o desempenho da transferência dos dados está intimamente ligado a dois elementos ou características desse barramento:
+- largura (L);
+- velocidade (V);
+
+Assim, temos que a taxa de transferência (T) é:
+
+$$
+T = L * V
+$$
+
+---
+class: inverse, middle, center
+
+# bit, caractere, byte e palavra
+
+---
+## bit, caractere, byte e palavra
+
+Toda informação introduzida em um computador(sejam dados que serão processados ou instruções de um programa) precisa ser entendida pela máquina, para que possa corretamente interpretá-la e processá-la.
+
+O computador, sendo um equipamento eletrônico, armazena e movimenta as informações internamente sob forma eletrônica; esta pode ser um valor de voltagem ou de corrente.
+
+---
+## bit, caractere, byte e palavra
+
+Para representar eletricamente todos os símbolos utilizados na linguagem humana, seriam necessários mais de 100 diferentes valores de tensão ou de corrente. Foi uma das grandes desvantagens do primeiro computador eletrônico o ENIAC.
+
+Foi então criado um sistema numérico com poucas combinações, o “binário” 0 e 1, tonando-se mais simples manipular as informações.
+
+---
+## bit, caractere, byte e palavra
+
+Com uma máquina binária, tornou-se mais simples o emprego da lógica booleana:
+- Sim ou não
+- Aberto ou fechado
+- Ligado ou desligado
+
+Dessa forma nos computadores digitais, toda a informação introduzida é convertida para a forma binária.
+
+Todas as informações que um computador manipula são guardadas na forma de sinais elétricos discretos (pulsos elétricos) que podem assumir dois valores, basicamente. Como os sinais elétricos assumem, primariamente, dois valores (desligado e ligado), nós dizemos que esses valores são representados como 0 (zero) e 1 (um).
+
+---
+## bit, caractere, byte e palavra
+
+A menor unidade de informação armazenável em um computador é o algarismo binário ou digito binário, conhecido como **bit** (retirado da palavra inglesa) **binary digit**.
+
+A primeira definição formal atribuída a um grupo ordenado de bits, foi instituída pela IBM, e hoje usada por todos os fabricantes. Trata-se do **Byte , definido como um grupo ordenado de oito bits**.
+
+---
+## bit, caractere, byte e palavra
+
+Cada caractere nosso é representado por um conjunto de 8 bits ( 1 Byte )
+
+```
+C = 01000011
+A = 01000001
+S = 01010001
+A = 01000001
+```
+
+---
+## bit, caractere, byte e palavra
+
+Um caractere representa pouca informação como por exemplo a letra “a” .
+
+Toda letra ou mesmo espaço no texto pode ser um caractere.
+
+O Byte representa um caractere internamente no computador, não tem finalidade de representar qualquer tipo de informação, sendo tão somente uma unidade de armazenamento e transferência.
+
+---
+## bit, caractere, byte e palavra
+
+### ASCII
+
+[ASCII](https://pt.wikipedia.org/wiki/ASCII) (_American Standard Code for Information Interchange_) é um código binário que codifica um conjunto de 128 sinais: 95 sinais gráficos (letras do alfabeto latino, sinais de pontuação e sinais matemáticos) e 33 sinais de controle, utilizando portanto apenas 7 bits para representar todos os seus símbolos.
+
+---
+## bit, caractere, byte e palavra
+
+1 Byte = 8 bits
+
+1 Kibibyte (KiB) = 1024 Bytes = \\( 2^{10} \\)
+
+1 Mebibyte (MiB) = 1024 X 1024 = 1.048.576 Bytes = \\( 2^{20} \\)
+
+1 Gibibyte (GiB) = 1024 X 1024 X 1024 Bytes = 1.073.741.824 = \\( 2^{30} \\)
+
+1 Tebibyte(TiB) = 1.099.511.627.776 = \\( 2^{40} \\)
+
+---
+## bit, caractere, byte e palavra
+
+[![](assets/img/sl03/fig05.png)](https://pt.wikipedia.org/wiki/Byte)
+
+---
+## bit, caractere, byte e palavra
+
+Também em computação, criou-se o conceito da palavra, embora nesse caso ele tenha pequenas diferenças em relação as palavras das nossas linguagens.
+
+Nos computadores é um valor fixo e constante para um dado processador.
+- Ex: palavras com 16 bits, 32 bits e 64 bits.
+
+Mesmo as palavras serem menores para o computador são processadas somente com estes tamanhos.
+
+---
+class: bg-pic
+background-image: url(http://i.giphy.com/upg0i1m4DLe5q.gif)
+
+
+    </textarea>
+    <script src="assets/js/remark.min.js">
+    </script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+    <script>
+      var slideshow = remark.create({
+            highlightStyle: 'monokai',
+            highlightLanguage: 'remark',
+            highlightLines: true
+        });
+
+        MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            processEscapes: true
+          }
+        });
+    </script>
+  </body>
+</html>
