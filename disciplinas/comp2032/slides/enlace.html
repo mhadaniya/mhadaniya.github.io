@@ -1,0 +1,1109 @@
+<!doctype html>
+<html lang="en">
+
+    <!-- 
+    Slides para a disciplina de Redes de Computadores.
+    Utilizando reveal.js
+    -->
+	<head>
+		<meta charset="utf-8">
+
+		<title>Camada de Enlace</title>
+
+		<meta name="description" content="Slide sobre Camada de Enlace">
+		<meta name="author" content="Mario H. Adaniya">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+		<link rel="stylesheet" href="../../css/main.css">
+		<link rel="stylesheet" href="../../reveal/css/reveal.css">
+		<link rel="stylesheet" href="../../reveal/css/theme/white.css" id="theme">
+        <link rel="shortcut icon" href="/favicon-unifil.ico" />
+        
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="../../reveal/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Redes de Computadores</h1>
+					<h4>Mario H. Adaniya</h4>
+					<!--p>
+						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
+					</p-->
+				</section>
+            
+                <section>
+					<h1>Camada de Enlace</h1>	                    
+				</section>
+                
+                <section>
+                    <h2>Objetivos</h2>
+                    <p>Entender os conceitos da camada de enlace:</p>
+					<ul>
+						<li>Detecção e correção de erros</li>
+						<li>Controle de acesso ao meio (enlace)</li>
+						<li>Enquadramento (Delimitação de quadros)</li>
+					</ul>
+                </section>
+                
+                <!-- Conceitos iniciais -->
+                <section>
+                    <section>
+                        <h2>Conceitos iniciais</h2>
+                    </section>
+                    
+                    <section data-background="imgs/enlace.png" data-background-size="600px">                        
+                    </section>
+                    
+                    <section id="fragment" data-background="imgs/enlace2.png" data-background-size="600px">   
+                        <h2 class="fragment" style="color:red;"> <b>NÓS (NODES)</b></h2>                        
+                    </section>
+                    
+                    <section data-background="imgs/enlace1.png" data-background-size="600px"> 
+                        <h2 class="fragment" style="color:red;"> <b>ENLACE</b></h2>
+                    </section>
+
+                    <section>
+                        <p><b>Enlace: </b> canal de comunicação que conecta nós adjacentes através de um caminho.</p>
+                        <ul>
+                            <li class="fragment">Enlaces com fio</li>
+                            <li class="fragment">Enlaces sem fio</li>
+                            <li class="fragment">LANs</li>
+                        </ul>
+                    </section>
+                    
+                    <section>						
+                        <p> Na camada de enlace, o <b>PDU</b> (<i>Protocol Data Unit</i>) tratado chamamos de <b>quadros (<i>frames</i>)</b>, que encapsula <b>datagramas</b>.</p>
+                    </section>
+
+                    <section>						
+                        <p> Permitir a comunicação eficiente e confiável entre dois computadores adjacentes em nível da camada de enlace de dados (adjacentes no sentido de estarem fisicamente conectadas)</p>
+                    </section>
+                    
+                    <section>
+                        <p>Datagrama transferido por protocolos de enlace diferentes sobre enlaces diferentes: <br>
+                        <b>ex.:</b> Ethernet no primeiro enlace, quadro relay nos enlaces intermediários, 802.11 no último enlace. <br>
+                        Cada protocolo de enlace provê serviços diferentes: <br>
+                        <b>ex.:</b> pode ou não prover transferência confiável sobre o enlace</p>
+                    </section>
+                    
+                    <section data-background="imgs/maps01.png" data-background-size="800px">						                        
+                    </section>
+                    
+                    <section data-background="imgs/maps02.png" data-background-size="800px">						                        
+                    </section>
+                    
+                    <section data-background="imgs/maps03.png" data-background-size="800px">						                        
+                    </section>
+                                     
+                    <section data-background="imgs/maps01.png" data-background-size="800px">                                                
+                        <ul style="background:#eaeaea; list-style:none;">
+                            <li><b>Turista:</b> datagrama</li>
+                            <li><b>Segmento de transporte:</b> enlace de comunicação</li>
+                            <li><b>Modo de transporte:</b> protocolo da camada de enlace</li>
+                        </ul>                                                    
+                    </section>
+
+                </section>
+                
+                <!-- Serviços da camada de enlace-->
+				<section>
+                    <section>
+                        <h2>Serviços</h2>
+                    </section>
+					
+                    <section>
+                        <h3>Enquadramento</h3>
+                        <ul>
+                            <li>Encapsula datagramas em quadros acrescentando cabeçalhos e trailer</li>
+                            <li>Implementa acesso ao canal se o meio é compartilhado</li>
+                            <li><b>Endereços físicos</b> usados nos cabeçalhos dos quadros para identificar a fonte e o destino dos quadros</li>
+                            <li>Diferente do endereço IP</li>
+                        </ul>
+                    </section>
+                    
+                    <section>
+                        <h3>Entrega confiável entre dois equipamentos fisicamente conectados </h3>                        
+                    </section>
+                    
+                    <section>
+                        <h3>Controle de fluxo</h3>
+                        <p>O controle de fluxo assegura que o transmissor não sobrecarregue o receptor com dados, evitando o estouro da capacidade de armazenamento do buffer.<br> Os dados são fragmentados em frames pequenos pois:<br> </p>
+                        <ul>
+                            <li>Tamanho do buffer é limitado</li>
+                            <li>Erros são detectados mais cedo</li>
+                            <li>Em caso de erro, pequena quantidade de dados é retransmitida</li>
+                            <li>Evita-se que um transmissor ocupe o canal por muito tempo</li>
+                        </ul>                       
+                    </section>
+                
+                    <section>
+                        <h3>Detecção de erros</h3>
+                        <p>Erros causados pela atenuação do sinal e por ruídos, o receptor detecta a presença de erros e avisa o transmissor para reenviar o quadro perdido.</p>
+                    </section>
+                
+                    <section>
+                        <h3>Correção de erros</h3>
+                        <p>O receptor identifica e corrige o bit com erro(s) sem recorrer à retransmissão </p>
+                    </section>
+                
+                    <section>
+                        <h3>Half-duplex e full-duplex</h3>
+                        <p> Com half-duplex, os nós em ambas as extremidades do enlace podem transmitir, mas não ao mesmo tempo </p>
+                    </section>
+                    										
+				</section>
+
+<!-- PACOTES E QUADROS -->
+				<section>
+					<section>
+						<h2>Pacotes e Quadros</h2>
+					</section>
+					
+					<section>
+						<h3>Pacotes e Quadros</h3>
+						<p>A camada de enlace de dados utiliza os serviços da camada física para enviar e receber bits pelo canal de comunicação </p>
+						<ol>Possui diversas funções, dentre as quais:
+							<li> Fornecer uma interface de serviço bem definida à camada de rede </li>
+							<li> Lidar com erros de transmissão </li>
+							<li> Regular o fluxo de dados de tal forma que receptores lentos não sejam atropelados por transmissores rápidos</li>
+						</ol>
+					</section>
+					
+					<section>
+						<h3>Pacotes e Quadros</h3>
+						<p>Para alcançar esses objetivos, a camada de enlace recebe os pacotes da camada de rede e os encapsula em quadros para transmissão </p>
+ 						<p>Cada quadro contém um cabeçalho (header) de quadro, um campo de carga útil que conterá o pacote, e um final (trailer) de quadro como mostra a figura a seguir</p>
+					</section>
+					
+					<section>
+						<h3>Pacotes e Quadros</h3>
+						<img style="border: none;" src="imgs/quadros.png">
+					</section>
+					
+				</section>
+				
+<!--	SERVICOS OFERECIDOS A CAMADA DE REDES 	-->
+				<section>
+					<section>
+						<h2>Serviços oferecido à camada de redes</h2>
+					</section>
+					
+					<section>
+						<h3>Serviços oferecido à camada de redes</h3>
+						<img style="border: none;" src="imgs/serv_rede.png">
+					</section>
+					
+					<section>
+						<h3>Serviços oferecido à camada de redes</h3>
+						<p>O principal serviço é transferir dados da camada de rede da máquina de origem para a camada de rede da máquina de destino </p>
+						<p> Na camada de rede da máquina de origem há uma entidade, chamada processo , que entrega alguns bits à camada de enlace de dados para transmissão ao destino </p>
+						<p> A tarefa da camada de enlace de dados é transmitir bits à camada de rede dessa máquina de destino, conforme mostra a parte (a) da figura. A transmissão propriamente dita é mostrada na parte (b)</p>
+					</section>
+					
+					<section>
+						<h3>Serviços oferecido à camada de redes</h3>
+						<p>Contudo, é mais fácil pensamos em termos de dois processos na camada de enlace de dados, que se comunicam por intermédio de um protocolo de enlace de dados (por isso utilizaremos como referência sempre a parte (a) da figura) </p>
+						<p>A camada de enlace de dados pode ser projetada de modo a oferecer diversos serviços</p>
+						<p>Os serviços reais oferecidos podem variar de um protocolo para outro. </p>
+					</section>
+					
+					<section>
+						<h3>Serviços oferecido à camada de redes</h3>
+					<ol>Três possibilidades razoáveis que consideraremos são:
+							<li>Serviço não orientado a conexões sem confirmação</li>
+							<li>Serviço não orientado a conexões com confirmação</li>
+							<li>Serviço orientado a conexões com confirmação.</li>
+						</ol>
+					</section>
+				
+					<section>
+						<h3>Serviço não orientado a conexões sem confirmação</h3>
+						<ul>
+							<li>consiste em fazer a máquina de origem enviar quadros independentes à máquina de destino, sem que essa confirme o recebimento desses quadros</li>
+							<li>A Ethernet é um bom exemplo de uma camada de enlace de dados que oferece esta classe de serviço</li>
+							<li>Nenhuma conexão lógica é estabelecida antes ou liberada depois do processo. Se um quadro for perdido em decorrência de ruídos na linha, não haverá nenhuma tentativa de detectar a perda ou de recuperá-lo na camada de enlace de dados</li>							
+						</ul>
+					</section>
+					
+					<section>
+						<h3>Serviço não orientado a conexões sem confirmação</h3>
+						<ul>							
+							<li>Esta classe de serviço é apropriada quando a <b>taxa de erros é muito baixa</b> e a recuperação fica a cargo das camadas mais altas</li>
+							<li>Ela também é apropriada para o tráfego em tempo real, no qual, a exemplo da voz, os dados atrasados causam mais problemas que os dados recebidos com falhas</li>
+						</ul>
+					</section>
+					
+					<section>
+						<h3>serviço não orientado a conexões com confirmação</h3>
+						<ul>
+							<li>Quando este serviço é oferecido, ainda não há conexões lógicas sendo usadas, mas cada quadro enviado é confirmado individualmente</li>
+							<li>Caso não tenha chegado dentro de um intervalo específico o quadro poderá ser enviado outra vez</li>
+							<li>Esse serviço é útil em canais não confiáveis, como os sistemas sem fio. O padrão 802.11 (WiFi) é um bom exemplo desta classe de serviço </li>
+							
+						</ul>
+					</section>
+					
+					<section>
+						<h3>serviço não orientado a conexões com confirmação</h3>
+						<ul>
+							<li>Oferecer recursos de confirmação a nível de camada de enlace é uma questão de otimização, nunca uma exigência </li>
+							<li>A camada de rede sempre pode enviar um pacote e esperar que ele seja confirmado por seu par na máquina remota. Se a confirmação não chegar durante o intervalo do timer, o transmissor poderá enviar a mensagem inteira mais umas vez</li>							
+						</ul>
+					</section>
+					
+					<section>
+						<h3>serviço não orientado a conexões com confirmação</h3>
+						<ul>							
+							<li>O problema desta estratégia é que ela pode ser ineficaz, pois os enlaces normalmente tem um comprimento máximo para o quadro (imposto por hardware) e atrasos de propagação conhecidos. Contudo, a camada de redes não conhece esses parâmetros, podendo enviar um pacote grande subdividido em por exemplo, dez quadros, dos quais dois são perdidos em média, fazendo com que o tempo necessário para efetivar a transmissão do pacote com sucesso seja muito longo</li>
+							<li>Ao invés disso, se quadros individuais forem confirmados e retransmitidos, então os erros podem ser corrigidos rapidamente</li>
+						</ul>
+					</section>
+					
+					<section>
+						<h3>Serviço orientado a conexões</h3>
+						<ul>							
+							<li>Com ele, máquinas de origem e de destino estabelecem uma conexão antes de qualquer dado ser transferido. Cada quadro enviado pela conexão é numerado, e a camada de enlace de dados garante de fato que cada quadro será recebido</li>
+							<li>Além disso, esse serviço garante que todos os quadros serão recebidos de uma única vez e na ordem correta. Assim, os serviços orientados a conexões fornecem aos processos da camada de rede o equivalente a um fluxo de bits confiável</li>
+							<li>Isso é apropriado para enlaces longos, não confiáveis, como um canal de satélite ou um circuito telefônico interurbano</li>
+						</ul>	
+					</section>
+					
+					<section>
+						<h3>Serviço orientado a conexões</h3>
+						<ol>Quando o serviço orientado a conexões é usado, as conexões passam por 3 fases distintas:	
+							<li>Estabelecimento da comunicação, inicializando variáveis e contadores necessários para controlar os quadros</li>
+							<li>Um ou mais quadros são transmitidos</li>
+							<li>A conexão é desfeita, liberando-se as variáveis, buffers e outros recursos utilizados</li>
+						</ol>	
+					</section>
+					
+					
+					
+				</section>
+				
+<!-- ENQUADRAMENTO -->				
+		 <section>
+				<section>
+					 <h2>Enquadramento</h2>
+				</section>
+
+				<section>
+					 <ul>
+							<li>Contagem de caracteres</li>
+							<li>Bytes de flags</li>
+							<li>Flags iniciais e finais</li>
+							<li>Violação de codificação da camada física</li>
+					 </ul>
+				</section>
+
+				<section>
+						<h3>Contagem de caracteres</h3>
+						<img style="border: none;" src="imgs/contagem.png">
+				</section>
+
+				<section>
+						<h3>Contagem de caracteres</h3>
+						<p>O problema com esse algoritmo é que a contagem pode ser adulterada por um erro de transmissão, conforme visto na parte (b) da figura anterior, fazendo com que seja perdido a capacidade de localizar o início do quadro seguinte</p>
+						<p>Mesmo que o checksum esteja incorreto, de modo que o destino identifique que o quadro está defeituoso, ele ainda não terá informações suficientes para saber onde começa o quadro seguinte</p>
+						<p>Enviar um quadro de volta à origem também não ajuda, pois o destino não sabe quantos caracteres deverão ser ignorados para chegar ao início da retransmissão. Por essa razão, o método de contagem de caracteres quase não é mais usado</p>										
+				</section> 
+
+				<section>
+						<h3>Bytes de flags</h3>
+						<img style="border: none;" src="imgs/byte_flag.png">
+				</section>
+
+				<section>
+						<h3>Bytes de flags</h3>
+						<p>Este método contorna o problema de ressincronização após um erro, <b>fazendo cada quadro começar e terminar com bytes especiais</b>. Normalmente o mesmo byte, chamado de <b>byte flag</b>, é usado como delimitador de início e fim, conforme visto na parte (a) da figura </p>										
+					<p> Dois bytes de flag consecutivos indicam o fim de um quadro e o início de outro </p>
+					<p> Assim, se o receptor perder a sincronização ele poderá simplesmente procurar 2 bytes de flag para encontrar o final do quadro atual e o início do seguinte</p>
+				</section>
+
+				<section>
+					<h3>Bytes de flags</h3>
+					<p>Contudo ainda existe um problema, é bem possível que o byte de flag ocorra no meio dos dados transmitidos, interferindo no enquadramento</p>
+					<p>Nesta situação, uma solução é fazer com que o transmissor inclua um caractere de escape especial (ESC) imediatamente antes de cada byte de flag “acidental”</p>
+					<p>A camada de enlace do receptor remove os bytes de escape antes de os entregar à camada de rede. Esta técnica pe chamada de inserção de bytes <b>(byte stuffing)</b></p>
+			 </section>
+
+			 <section>
+						<h3>Preenchimento com bits</h3>
+						<img style="border: none;" src="imgs/bits_preench.png">
+				</section>
+
+				<section>
+					<h3>Preenchimento com bits</h3>
+					<p>O enquadramento também pode ser realizado a nível de bits, de modo que os quadros possam conter um número qualquer de bits, compostos por unidades de qualquer tamanho </p>
+					<p>Ele foi desenvolvido para o então muito popular protocolo de controle de enlace de dados de alto nível, ou HDLC (High-level Data Link Control). </p> 
+					<p>Cada quadro começa e termina com um padrão de bits especial, 01111110, ou 0x7E em hexadecimal (na verdade um byte de flag...) </p>
+
+				</section>
+
+			 <section>
+					<h3>Preenchimento com bits</h3>										
+					<p>Sempre que encontra 5 valores 1 consecutivos nos dados, a camada de enlace no transmissor automaticamente insere um bit 0 no fluxo de bits que está sendo enviado. Esta inserção de bits é semelhante a inserção de bytes </p>
+				 <p>Escape é inserido no fluxo de caracteres enviado antes de ocorrer um byte de flag nos dados. Isso também ajuda a manter uma densidade mínima de transições, o que ajuda a camada física a manter a sincronização.</p>
+				 <p>O USB utiliza a inserção de bits por esse motivo</p>									 
+				 <p>A inserção de bits e de bytes é completamente transparente para a camada de rede de ambos os computadores.</p>
+				</section>
+
+			<section>
+					<h3>Byte de flag e Preenchimento com bits</h3>										
+					<p>Com a inserção de bits e de bytes, um efeito colateral é que agora o comprimento de um quadro depende do conteúdo de dados que ele carregar, por exemplo: se não houver bytes de flag no meio dos dados, 100 bytes podem ser transportados em um quadro de aproximadamente 100 bytes </p>
+					<p>Porém se os dados consistirem unicamente de bytes de flag, cada um terá um escape associado e o quadro terá aproximadamente 200 bytes de comprimento</p>
+					<p>Já com a inserção de bits, o aumento seria de aproximadamente 12,5%, pois 1 bit é inserido a cada byte</p>
+			</section>
+
+			 <section>
+				 <h3>Violação de código na camada física</h3>
+				 <p> Na matéria de codificação na camada física, vimos que a codificação de bits como sinais normalmente inclui redundância para ajudar o receptor </p>
+				 <p> Essa redundância significa que alguns sinais não ocorrerão em dados regulares. Por exemplo, no código 4B/5B, em que dados são mapeados para 5 bits de sinal a fim de garantir transições de bits suficientes, serão usados apenas 16 das 32 possibilidades de sinal.</p> 
+			 </section>
+
+			 <section>
+				 <h3>Violação de código na camada física</h3>
+				 <p> Podemos então utilizar alguns sinais reservados para indicar o início e o fim de quadros. Com efeito, estamos usando “violações de código” para delimitar os quadros. A beleza desse esquema é que, por serem sinais reservados, é fácil encontrar o início e o fim dos quadros, e não é preciso inserir bits nos dados</p>
+			 </section>
+
+			 <section>									 
+				 <p> Muitos protocolos de enlace de dados, por segurança, usam uma combinação desses métodos </p>
+				 <p> Um padrão comum utilizado no 802.11 é fazer com que o quadro comece com um padrão bem definido, denominado de preâmbulo. Esse padrão pode ser muito longo (72bits é típico para redes 802.11), para permitir que o receptor se prepare para um pacote que está chegando
+				 <p>O preâmbulo é então seguido por um campo de comprimento (ou seja, um contador) no cabeçalho, que é usado para localizar o final do quadro </p>
+			 </section>
+			</section>
+			
+<!-- CONTROLE DE ERROS -->
+			<section>
+				
+				<section>
+					<h2>CONTROLE DE ERROS</h2>
+				</section>
+				
+				<section>
+					<h3>CONTROLE DE ERROS</h3>
+					<p>A forma mais comum de garantir uma entrega confiável é dar ao transmissor algum tipo de feedback sobre o que está acontecendo no outro extremo da linha de comunicação (receptor)</p>
+					<p>Geralmente o protocolo de comunicação solicita que o receptor retorne quadros de controle especiais com confirmações positivas ou negativas sobre os quadros recebidos (ou não)</p>
+				</section>
+				
+				<section>
+					<h3>CONTROLE DE ERROS</h3>
+					<p>Se receber uma confirmação positiva sobre um quadro, o transmissor saberá que o quadro chegou em segurança ao destino. </p>
+					<p>Por outro lado, uma confirmação negativa significa que algo saiu errado e o quadro deve ser retransmitido</p>
+				</section>
+				
+				<section>
+					<h3>CONTROLE DE ERROS</h3>					
+					<p class="fragment">? Um quadro desaparecer totalmente (por exemplo uma rajada de ruídos), fazendo com que o receptor não reaja de maneira alguma (sem feedback) ?</p>
+					<p class="fragment">? Quadro de confirmação se perde e o emissor não saberá como prosseguir ?</p>
+				</section>
+				
+				<section>
+					<h3>CONTROLE DE ERROS</h3>				
+					<p>Para evitar este tipo de problema, são introduzido <b>timers</b> na camada de enlace de dados </p>
+					<p> Ao se enviar um quadro, o emissor inicializa um timer suficientemente longo para que o quadro chegue ao destino e dê o seu feedback. Caso isso não ocorra, o timer é desativado e o quadro enviado novamente</p>	
+				</section>
+				
+				<section>
+					<h3>CONTROLE DE ERROS</h3>
+					<p>? O mesmo quadro pode ser aceito pelo receptor duas ou mais vezes ?</p>
+					<p class="fragment">Para evitar que isso aconteça, geralmente é preciso atribuir números de sequência aos quadros transmitidos, de modo que o receptor possa distinguir as retransmissões dos originais</p>
+				</section>
+				
+			</section>
+				
+<!--	CÓDIGO DE DETECÇÃO DE ERROS	-->
+			<section>
+				<section>
+					<h2>CÓDIGO DE DETECÇÃO DE ERROS</h2>
+				</section>
+				
+				<section>
+					<h3>CÓDIGO DE DETECÇÃO DE ERROS</h3>
+					<ul>
+						<li>Paridade </li>
+						<li> Checksums </li>
+						<li> Verificação de redundância cíclica (CRCs)</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h3>Bit de Paridade</h3>
+					<ul>
+						<li>Um único bit de paridade é acrescentado aos dados </li>
+						<li> O bit de paridade é escolhido de modo que o número de bits 1 na palavra de código seja par ou ímpar (definido à priori) </li>
+						<li> Por exemplo quando a “palavra” 1011010 é enviada utilizando a <b>paridade par</b>, um bit 0 é acrescentado ao final para torná-lo 1011010<b>0</b> </li>
+						<li>Com a paridade ímpar, 1011010 torna-se 1011010<b>1</b> </li>						
+					</ul>
+				</section>
+				
+				<section>
+					<h3>Bit de Paridade</h3>
+					<p>Em um código com um único bit de paridade, qualquer erro de um único bit produz uma palavra com a paridade errada. Isso significa que esse código pode detectar erros de um único bit</p>
+					<p>Podemos agora calcular um bit de paridade por linha (k), deste modo serão detectados de forma confiável k erros de bit (desde que haja somente um erro por linha)</p>
+				</section>
+				
+				<section>
+					<h3>Bit de Paridade</h3>
+					<p class="fragment">E erros devido à rajada de interferência?</p>
+					<p class="fragment"> Podemos calcular os bits de paridade em uma ordem diferente daquela de transmissão, ou seja, calcular os bits de paridade por colunas (n)</p>
+					<p class="fragment">Esta técnica de codificação é chamada de entrelaçamento, que consiste de uma técnica geral para converter um código que detecta (ou corrige) erros isolados, em um código que detecta (ou corrige) erros em rajada</p>
+				</section>
+				
+				<section>
+					<h3>Bit de Paridade</h3>
+					<img style="border: none;" src="imgs/bit_paridade.png">					
+				</section>
+				
+				<section>
+					<h3>Checksum</h3>
+					<p>Consiste na transmissão de todas as palavras juntamente com o resultado da sua soma binária.</p>
+					<ul>
+						<li>Inclui o bit de transporte (vai-um/carry bit)</li>
+						<li>Inversão do valor dos bits do checksum</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h3>Cyclic Redundancy Check</h3>
+					<p>O esquema de checksum utilizado na camada de enlace é o CRC (Cyclic Redundancy Check) que consiste de um código polinomial de k termos</p>
+					<p>Esquema mais eficiente</p>
+					<p>Emissor/receptor concordam num polinômio gerador G(x), em que quanto maior for o seu grau maior será a capacidade de detecção de erros</p>
+					<p>Para calcular o CRC de um quadro com k bits, que corresponde ao polinômio M(x), o quadro deve ter mais bits do que o polinômio gerador</p>
+				</section>
+				
+				<section>
+					<h3>Cyclic Redundancy Check</h3>
+					<p>Neste polinômio tanto o bit de maior ordem quanto o de menor ordem devem ser iguais a 1</p>
+					<p>Palavra inicial de k bits é representado por um polinômio de X de ordem k-1</p>
+					<p>Por exemplo: 110001 tem 6 bits e, portanto, representa um polinômio de seis termos com coeficientes 1,1,0,0,0 e 1 o que ficaria 1x<sup>5</sup> + 1x<sup>4</sup> + 0x<sup>3</sup> + 0x<sup>2</sup> + 0x<sup>1</sup> + 1x<sup>0</sup></p>
+				</section>
+				
+				<section>
+					<h3>Cyclic Redundancy Check</h3>
+					<ol>O algoritmo para cálculo do CRC é o seguinte:
+						<li> Seja r o grau do polinômio gerador G(x). Acrescente r bits zero à extremidade de baixa ordem do quadro, de modo que ele passe a conter m + r bits e corresponda ao polinômio x<sup>r</sup>M(x) </li>
+<li> Divida a string de bits correspondente a x<sup>r</sup>M(x) pela string de bits correspondente a G(x) utilizando a divisão de módulo 2 (XOR) </li>
+<li> Subtraia o resto (que tem sempre r ou menos bits) da string de bits correspondente a x<sup>r</sup>M(x) utilizando a subtração de módulo 2 (XOR). O resultado é o quadro verificado pela soma que deverá ser transmitida. </li>
+					</ol>
+					<small>* Lembre-se que uma divisão nada mais é do que subtrações sucessivas</small>
+				</section>
+				
+				<section>
+					<img style="border: none;" src="imgs/crc.png">					
+				</section>
+				
+				<section>
+					<h3>Cyclic Redundancy Check</h3>					
+					<p>Do lado receptor o cálculo consiste em dividir o quadro + o CRC pelo polinômio gerador </p>
+					<p>Se o resultado for zero, não houveram erros de transmissão, veja o complemento do exemplo anterior na figura a seguir</p>					
+				</section>
+				
+				<section>
+					<img style="border: none;" src="imgs/crccheck.png">					
+				</section>
+				
+			</section>
+			
+<!--	DETECÇÃO e Correção de ERROS	-->
+			<section>
+				<section>
+					<h2>DETECÇÃO e Correção de ERROS</h2>
+				</section>
+				
+				<section>
+					<h3>Hamming</h3>
+					<p>O código de Hamming é um código de detecção e correção, isto é, permite não apenas detectar o erro de um bit, mas também a localização do bit errado.</p>
+					<p>Trabalha com codificação, adicionando bits de controle em determinadas posições.</p>
+				</section>
+				
+				<section>
+					<h3>Hamming</h3>
+					<p>Considere uma palavra de 8 bits, serão necessários r bits de controle. r é obtido através de: r = log<sub>2</sub>8 </p>
+					<p>Se fosse uma palavra de 4 bits, seriam necessários 3 bits. Uma palavra de 20 bits? </p>					
+					<p class="fragment">r = 6 bits.</p>
+				</section>
+				
+				<section>
+					<h3>Hamming</h3>
+					<p>A inserção dos bits de controle na palavra é da esquerda para a direita, sendo colocado nas posições 2<sup>0,1,2,3,4,...,r</sup>. </p>
+					<p> M = 8 bits, r = 4. Assim sendo, temos: <br>
+						r<sub>1</sub> r<sub>2</sub> m<sub>1</sub> r<sub>3</sub> m<sub>2</sub> m<sub>3</sub> r<sub>4</sub> m<sub>4</sub> m<sub>5</sub> m<sub>6</sub> m<sub>7</sub> m<sub>8</sub> <br>
+					x<sub>1</sub> x<sub>2</sub> x<sub>3</sub> x<sub>4</sub> x<sub>5</sub> x<sub>6</sub> x<sub>7</sub> x<sub>8</sub> x<sub>9</sub> x<sub>10</sub> x<sub>11</sub> x<sub>12</sub> </p>										
+				</section>
+				
+				<section>
+					<p> E para uma palavra de 4 bits, por exemplo, números hexadecimais?</p>
+					<p class="fragment"> M = 4 bits, r = 3. Obtemos: <br>
+						r<sub>1</sub> r<sub>2</sub> m<sub>1</sub> r<sub>3</sub> m<sub>2</sub> m<sub>3</sub> m<sub>4</sub> <br>
+						x<sub>1</sub> x<sub>2</sub> x<sub>3</sub> x<sub>4</sub> x<sub>5</sub> x<sub>6</sub> x<sub>7</sub> </p>					
+				</section>
+				
+				<section>
+					<p> E como é calculado cada bit de controle r?</p>
+					<p>Dado: <br> 
+						r<sub>1</sub> r<sub>2</sub> m<sub>1</sub> r<sub>3</sub> m<sub>2</sub> m<sub>3</sub> m<sub>4</sub> <br>
+					x<sub>1</sub> x<sub>2</sub> x<sub>3</sub> x<sub>4</sub> x<sub>5</sub> x<sub>6</sub> x<sub>7</sub> </p>						
+					<p class="fragment"> r<sub>1</sub> = x<sub>3</sub> &oplus; x<sub>5</sub> &oplus; x<sub>7</sub> <br>
+						r<sub>2</sub> = x<sub>3</sub> &oplus; x<sub>6</sub> &oplus; x<sub>7</sub> <br>
+					r<sub>3</sub> = x<sub>5</sub> &oplus; x<sub>6</sub> &oplus; x<sub>7</sub> </p> 
+				</section>
+				
+				<section>
+					<p> E como é calculado cada bit de controle r?</p>
+					<p>Dado: <br> 
+						r<sub>1</sub> r<sub>2</sub> m<sub>1</sub> r<sub>3</sub> m<sub>2</sub> m<sub>3</sub> m<sub>4</sub> <br>
+					x<sub>1</sub> x<sub>2</sub> x<sub>3</sub> x<sub>4</sub> x<sub>5</sub> x<sub>6</sub> x<sub>7</sub> </p>						
+					<p class="fragment"> r<sub>1</sub> = x<sub>3</sub>(m<sub>1</sub>) &oplus; x<sub>5</sub>(m<sub>2</sub>) &oplus; x<sub>7</sub>(m<sub>4</sub>) <br>
+						r<sub>2</sub> = x<sub>3</sub>(m<sub>1</sub>) &oplus; x<sub>6</sub>(m<sub>3</sub>) &oplus; x<sub>7</sub>(m<sub>4</sub>) <br>
+					r<sub>3</sub> = x<sub>5</sub>(m<sub>2</sub>) &oplus; x<sub>6</sub>(m<sub>3</sub>) &oplus; x<sub>7</sub>(m<sub>4</sub>) </p> 
+				</section>
+				
+				<section>
+					<h4> E como é calculado cada bit de controle r?</h4>
+					<p>Dado a mensagem m: 1011 <br>
+						x: __1_011 <br>
+						r<sub>1</sub> r<sub>2</sub> m<sub>1</sub>(1) r<sub>3</sub> m<sub>2</sub>(0) m<sub>3</sub>(1) m<sub>4</sub>(1) <br>
+					x<sub>1</sub> x<sub>2</sub> x<sub>3</sub>(1) x<sub>4</sub> x<sub>5</sub>(0) x<sub>6</sub>(1) x<sub>7</sub>(1) </p>						
+					<p class="fragment"> r<sub>1</sub> = x<sub>3</sub>(1) &oplus; x<sub>5</sub>(0) &oplus; x<sub>7</sub>(1) = 0</p>
+					<p class="fragment"> r<sub>2</sub> = x<sub>3</sub>(1) &oplus; x<sub>6</sub>(1) &oplus; x<sub>7</sub>(1) = 1</p>
+					<p class="fragment"> r<sub>3</sub> = x<sub>5</sub>(0) &oplus; x<sub>6</sub>(1) &oplus; x<sub>7</sub>(1) = 0</p> 
+					<p class="fragment"> x: <font color="red">01</font>1<font color="red">0</font>011 </p>
+				</section>
+				
+				
+				<section>
+					<h3>Hamming</h3>
+					<table>
+						<thead>
+							
+						</thead>
+						<tr>
+							<th>M</th>
+							<th>m</th>
+							<th rowspan="9"></th>
+							<th>M</th>
+							<th>m</th>
+						</tr>
+						<tr>
+							<td>0</td>
+							<td>0000</td>
+							<td>8</td>
+							<td>1000</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>0001</td>
+							<td>9</td>
+							<td>1001</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>0010</td>
+							<td>10</td>
+							<td>1010</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>0011</td>
+							<td>11</td>
+							<td>1011</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>0100</td>
+							<td>12</td>
+							<td>1100</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>0101</td>
+							<td>13</td>
+							<td>1101</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td>0110</td>
+							<td>14</td>
+							<td>1110</td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td>0111</td>
+							<td>15</td>
+							<td>1111</td>
+						</tr>
+					</table>
+					
+				</section>
+				
+				<section>
+					<h3>Hamming</h3>
+					<table>
+						<thead>
+							
+						</thead>
+						<tr>
+							<th>M</th>
+							<th>m + r</th>
+							<th rowspan="9"></th>
+							<th>M</th>
+							<th>m + r</th>
+						</tr>
+						<tr>
+							<td>0</td>
+							<td>__0_000</td>
+							<td>8</td>
+							<td>__1_000</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td>__0_001</td>
+							<td>9</td>
+							<td>__1_001</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>__0_010</td>
+							<td>10</td>
+							<td>__1_010</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>__0_011</td>
+							<td>11</td>
+							<td>__1_011</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>__0_100</td>
+							<td>12</td>
+							<td>__1_100</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>__0_101</td>
+							<td>13</td>
+							<td>__1_101</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td>__0_110</td>
+							<td>14</td>
+							<td>__1_110</td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td>__0_111</td>
+							<td>15</td>
+							<td>__1_111</td>
+						</tr>
+					</table>					
+				</section>
+				
+				<section>
+					<h3>Hamming</h3>
+					<table>
+						<thead>
+							
+						</thead>
+						<tr>
+							<th>M</th>
+							<th>m + r</th>
+							<th rowspan="9"></th>
+							<th>M</th>
+							<th>m + r</th>
+						</tr>
+						<tr>
+							<td>0</td>
+							<td><font color="red">00</font>0<font color="red">0</font>000</td>
+							<td>8</td>
+							<td><font color="red">11</font>1<font color="red">0</font>000</td>
+						</tr>
+						<tr>
+							<td>1</td>
+							<td><font color="red">11</font>0<font color="red">1</font>001</td>
+							<td>9</td>
+							<td><font color="red">00</font>1<font color="red">1</font>001</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td><font color="red">01</font>0<font color="red">1</font>010</td>
+							<td>10</td>
+							<td><font color="red">10</font>1<font color="red">1</font>010</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td><font color="red">10</font>0<font color="red">0</font>011</td>
+							<td>11</td>
+							<td><font color="red">01</font>1<font color="red">0</font>011</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td><font color="red">10</font>0<font color="red">1</font>100</td>
+							<td>12</td>
+							<td><font color="red">01</font>1<font color="red">1</font>100</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td><font color="red">01</font>0<font color="red">0</font>101</td>
+							<td>13</td>
+							<td><font color="red">10</font>1<font color="red">0</font>101</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td><font color="red">11</font>0<font color="red">0</font>110</td>
+							<td>14</td>
+							<td><font color="red">00</font>1<font color="red">0</font>110</td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td><font color="red">00</font>0<font color="red">1</font>111</td>
+							<td>15</td>
+							<td><font color="red">11</font>1<font color="red">1</font>111</td>
+						</tr>
+					</table>					
+				</section>
+				
+				<section>
+					<h4>Hamming</h4>
+					<p> Depois de enviado a mensagem (x), <b>se houver erro em um bit apenas, é possível detectar e corrigir o erro</b> da seguinte forma. O receptor faz o cálculo de k<sub>1</sub>,k<sub>2</sub>, k<sub>3</sub>,..., k<sub>n</sub></p>
+					<p>Se k<sub>1</sub>,k<sub>2</sub>, k<sub>3</sub>,..., k<sub>n</sub> = 0, não há erros. Caso contrário, o número codificado (k<sub>n</sub>,...,k<sub>3</sub>,k<sub>2</sub>,k<sub>1</sub>) pelos n bits determinam a posição.</p>
+				</section>
+				
+				<section>
+					<h4>Hamming</h4>
+					<p> O cálculos de k é dado por: </p>
+					<p class="fragment"> k<sub>1</sub> = x<sub>1</sub> &oplus; x<sub>3</sub> &oplus; x<sub>5</sub> &oplus; x<sub>7</sub> &oplus; x<sub>9</sub> &oplus; ... </p>
+					<p class="fragment"> k<sub>2</sub> = x<sub>2</sub> &oplus; x<sub>3</sub> &oplus; x<sub>6</sub> &oplus; x<sub>7</sub> &oplus; x<sub>8</sub> &oplus; x<sub>9</sub> &oplus; ... </p>
+					<p class="fragment"> k<sub>3</sub> = x<sub>4</sub> &oplus; x<sub>5</sub> &oplus; x<sub>6</sub> &oplus; x<sub>7</sub> &oplus; x<sub>12</sub> &oplus; ...  </p>
+					<p class="fragment"> k<sub>4</sub> = x<sub>8</sub> &oplus; x<sub>9</sub> &oplus; x<sub>10</sub> &oplus; x<sub>11</sub> &oplus; x<sub>12</sub> &oplus; x<sub>13</sub> &oplus; x<sub>14</sub> &oplus; x<sub>15</sub> &oplus;... </p>
+				</section>
+				
+					<section>
+					<h4>Hamming</h4>
+					<p> Suponhamos que queremos enviar: 1000011.</p>
+					<p class="fragment"> O receptor recebe: 1000011.</p>
+					<p class="fragment"> Calculamos os k's de 1000011 </p>
+					<p class="fragment"> k<sub>1</sub> = x<sub>1</sub>(1) &oplus; x<sub>3</sub>(0) &oplus; x<sub>5</sub>(0) &oplus; x<sub>7</sub>(1) = 0</p>
+					<p class="fragment"> k<sub>2</sub> = x<sub>2</sub>(0) &oplus; x<sub>3</sub>(0) &oplus; x<sub>6</sub>(1) &oplus; x<sub>7</sub>(1) = 0</p>
+					<p class="fragment"> k<sub>3</sub> = x<sub>4</sub>(0) &oplus; x<sub>5</sub>(0) &oplus; x<sub>6</sub>(1) &oplus; x<sub>7</sub>(1) = 0</p>
+					<p class="fragment"> Assim, k<sub>3</sub>,k<sub>2</sub>,k<sub>1</sub> = 0</p>
+					<p class="fragment"> Logo, não há erro em nenhuma posição.</p>
+				</section>
+				
+				<section>
+					<h4>Hamming</h4>
+					<p> Suponhamos que queremos enviar: 1101001.</p>
+					<p class="fragment"> Devido a erros na transmissão, enviamos: 1<font color="red">0</font>01001. Um erro em um bit de controle.</p>
+					<p class="fragment">Calculamos os k's de 1<font color="red">0</font>01001 </p>
+					<p class="fragment"> k<sub>1</sub> = x<sub>1</sub>(1) &oplus; x<sub>3</sub>(0) &oplus; x<sub>5</sub>(0) &oplus; x<sub>7</sub>(1) = 0</p>
+					<p class="fragment"> k<sub>2</sub> = x<sub>2</sub>(0) &oplus; x<sub>3</sub>(0) &oplus; x<sub>6</sub>(0) &oplus; x<sub>7</sub>(1) = 1</p>
+					<p class="fragment"> k<sub>3</sub> = x<sub>4</sub>(1) &oplus; x<sub>5</sub>(0) &oplus; x<sub>6</sub>(0) &oplus; x<sub>7</sub>(1) = 0</p>
+					<p class="fragment"> Assim, k<sub>3</sub>k<sub>2</sub>k<sub>1</sub> = 010</p>
+					<p class="fragment"> Logo, o erro está na 2a posição.</p>
+				</section>
+				
+				<section>
+					<h4>Hamming</h4>
+					<p> Utilizando a mesma mensagem do exemplo anterior: 1101001. Mas o erro desta vez ocorre em um bit de mensagem. Enviamos: 110100<font color="red">0</font>. </p>
+					<p class="fragment">Calculamos os k's de 110100<font color="red">0</font> </p>
+					<p class="fragment"> k<sub>1</sub> = x<sub>1</sub>(1) &oplus; x<sub>3</sub>(0) &oplus; x<sub>5</sub>(0) &oplus; x<sub>7</sub>(0) = 1</p>
+					<p class="fragment"> k<sub>2</sub> = x<sub>2</sub>(1) &oplus; x<sub>3</sub>(0) &oplus; x<sub>6</sub>(0) &oplus; x<sub>7</sub>(0) = 1</p>
+					<p class="fragment"> k<sub>3</sub> = x<sub>4</sub>(1) &oplus; x<sub>5</sub>(0) &oplus; x<sub>6</sub>(0) &oplus; x<sub>7</sub>(0) = 1</p>
+					<p class="fragment"> Assim, k<sub>3</sub>k<sub>2</sub>k<sub>1</sub> = 111</p>
+					<p class="fragment"> Logo, o erro está na 7a posição.</p>
+				</section>
+			</section>	
+			
+<!--	CONTROLE DE FLUXO	-->
+			<section>
+				<section>
+					<h2>CONTROLE DE FLUXO</h2>
+				</section>
+				
+				<section>
+					<h3>Protocolos básicos de enlace de dados</h3>
+					<p>Na camada física, na camada de enlace e na camada de rede existem processos independentes que se comunicam pelo envio de mensagens.</p>					
+				</section>
+				
+				
+				<section>
+					<h3>Protocolos básicos de enlace de dados</h3>					
+					<img style="border: none;" src="imgs/enlace-protocolos.png">
+				</section>
+				
+				<section>
+					<h3>Protocolos básicos de enlace de dados</h3>
+					<p>No que se refere à camada de enlace, o pacote repassado a ela pela camada de rede através da interface consiste em dados puros, em que cada bit deve ser entregue à camada de rede de destino.</p>
+					<p>O fato de a camada de rede de destino interpretar parte do pacote como cabeçalho não tem nenhum interesse para a camada de enlace de dados.</p>
+				</section>
+				
+				<section>
+					<h3>Protocolos básicos de enlace de dados</h3>
+					<p>Quando a camada de enlace de dados aceita um pacote, ela o encapsula em um <b>quadro(frame)</b>, acrescentando-lhe um cabeçalho e um final de enlace de dados.</p>
+					<p>Portanto, ele consiste em:</p>
+					<ul>
+						<li class="fragment">Informações de controle (cabeçalho)</li>
+						<li class="fragment">Checksum (no final)</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex sem restrições</h3>
+					<ul>
+						<li class="fragment">Não se preocupa com a possibilidade de algo sair errado.</li>
+						<li class="fragment">Os dados são transmitidos em apenas um sentido.</li>
+						<li class="fragment">As camadas de rede do transmissor estão sempre prontas.</li>
+						<li class="fragment">O espaço disponível no buffer é infinito.</li>
+						<li class="fragment">Nunca perde pacotes.</li>
+					</ul>					
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex sem restrições</h3>
+					<img style="border: none;" src="imgs/simplex01.png">
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex sem restrições</h3>
+					<img style="border: none;" src="imgs/simplex00.png">
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex sem restrições</h3>
+				<pre><code data-trim contenteditable>
+typedef enum {frame_arrival} event_type;
+#include "protocol.h“
+
+void sender1(void) { 
+	frame s;
+	packet buffer;
+		while (true) { 
+		from_network_layer(&buffer); 
+		s.info = buffer; 
+		to_physical_layer(&s);
+	} 
+}
+					</code></pre>
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex sem restrições</h3>
+				<pre><code data-trim contenteditable>
+void receiver1(void) { 
+	frame r;
+	event_type event;
+	while (true) { 
+		Wait_for_event(&event); 
+		from_physical_layer(&r); 
+		to_network_layer(&r.info);
+	} 
+}
+					</code></pre>
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex Stop-and-Wait</h3>
+					<ul>
+						<li class="fragment">Controle de fluxo</li>
+						<li class="fragment">Canal continua livre de erros</li>						
+					</ul>	
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex Stop-and-Wait</h3>
+					<img style="width:90%; height:90%; border: none;" src="imgs/simplex-stop-wait.png">
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex Stop-and-Wait</h3>
+					<img style="width:90%; height:90%; border: none;" src="imgs/simplex-stop-wait01.png">
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex Stop-and-Wait com ruídos</h3>
+					<ul>
+						<li class="fragment">Agora podem ocorrer erros</li>
+						<li class="fragment">Retransmissão de quadros errados.</li>
+						<li class="fragment">Receptor deve saber distinguir se o quadro foi duplicado, logo, utiliza numeração.</li>						
+					</ul>	
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex Stop-and-Wait com ruídos</h3>
+					<ul>
+						<li class="fragment">O transmissor passa para o próximo quadro apenas depois de receber uma confirmação (ACK) da última sequência enviada;</li>
+						<li class="fragment">O receptor apenas aceita quadros com a próxima sequência esperada.</li>
+						<li class="fragment">Um temporizador é usado no transmissor para não ficar em deadlock.</li>
+						<li class="fragment">Neste exemplo, apenas um bit é necessário.</li>
+					</ul>	
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex Stop-and-Wait com ruídos</h3>
+					<img style="width:90%; height:90%; border: none;" src="imgs/simplex-ruido01.png">
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex Stop-and-Wait com ruídos</h3>
+					<img style="width:90%; height:90%; border: none;" src="imgs/simplex-ruido02.png">
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex Stop-and-Wait com ruídos</h3>
+					<img style="width:90%; height:90%; border: none;" src="imgs/simplex-ruido03.png">
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex Stop-and-Wait com ruídos</h3>
+					<img style="width:90%; height:90%; border: none;" src="imgs/simplex-ruido04.png">
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex Stop-and-Wait com ruídos</h3>
+					<img style="width:70%; height:70%; border: none;" src="imgs/simplex-ruido05.png">
+				</section>
+				
+				<section>
+					<h3>Protocolo simplex Stop-and-Wait com ruídos</h3>
+					<ul>
+						<li class="fragment">Quadros de dados são transmitidos em apenas um sentido (simplex)</li>
+						<li class="fragment">O transmissor precisa esperar a confirmação do último quadro enviado para poder enviar um novo quadro, este tempo de espera pode ser significativo, deixando o canal ocioso</li>
+						<li class="fragment">Estes protocolos são bons para introduzir o assunto, mas em situações práticas são pouco usuais</li>						
+					</ul>	
+				</section>
+				
+				<section>
+					<h3>Janela deslizante (Sliding Windows)</h3>
+					<ul>
+						<li class="fragment">Mecanismo de controle de fluxo e otimização</li>
+						<li class="fragment">O transmissor tem um limite de quadros para enviar segundo um parâmetro L que estabelece sua janela de transmissão</li>
+						<li class="fragment">Após o envio de L quadros sem receber nenhum ACK (acknowledge) o transmissor interrompe o envio de quadros e inicializa um temporizador para o frame perdido</li>						
+					</ul>	
+				</section>
+				
+				<section>
+					<h3>Janela deslizante (Sliding Windows)</h3>
+					<h4>Go back N</h4>
+					TODO: Ad
+				</section>
+				
+				<section>
+					<h3>Janela deslizante (Sliding Windows)</h3>
+					<h4>Retransmissão Seletiva</h4>
+					TODO: Ad
+				</section>
+				
+			</section>	
+			
+			<!-- PROTOCOLOS -->
+			<section>
+				<section>
+					<h2>Protocolos</h2>
+				</section>
+				
+				<section>
+					<h3>HDLC</h3>
+					<ul>
+						<li class="fragment">High-Level Data Link Control</li>
+						<li class="fragment">Padronizada pela ISO em 1979 (pai de todos os protocolos de nível 2)</li>
+						<ul>
+							<li class="fragment">Orientado a bit</li>
+							<li class="fragment">Sequência</li>
+							<li class="fragment">CRC</li>
+						</ul>						
+					</ul>
+					<p class="fragment">Outros protocolos de diferentes arquiteturas foram definidas utilizando subconjuntos funcionais do HDLC: LLC (IEEE-802.2/Redes locais), LAP-B (Redes X.25), LAD-D (Redes ISDN), LAP-M (Modems)</p>
+				</section>
+				
+				<section>
+					<h3>PPP</h3>
+					<ul>
+						<li class="fragment">Point to Point Protocol</li>
+						<li class="fragment">IETF - RFC's 1661, 1662, 1663, ...</li>
+						<ul>
+							<li class="fragment">Suporta múltiplos protocolos</li>
+							<li class="fragment">Detecção e correção de erros</li>
+							<li class="fragment">Negociação e atribuição dinâmica de endereços IP</li>
+							<li class="fragment">Autenticação</li>
+							<li class="fragment">Usado no acesso DIAL UP do Windows</li>
+							<li class="fragment">Configuração de enlace de dados e testes da qualidade do 	link</li>
+							<li class="fragment">Multiplexação do protocolo de rede</li>
+							<li class="fragment">negociações de compactação de dados</li>							
+						</ul>						
+					</ul>
+				</section>
+				
+				<section>
+					<h3>PPP</h3>
+					<ul>
+						<li>Utilizado para ligações ponto a ponto em links seriais</li>
+						<li>O PPP usa o HDLC como base para encapsular datagramas</li>
+					</ul>
+					<img style="width:90%; height:90%; border:0;" src="imgs/ppp01.png">
+				</section>
+				
+			</section>
+				
+				
+				
+			<section>
+				<img style="width:100%; height:100%;" src="../../img/thatsallfolks.gif">
+			</section>
+
+			</div>
+
+		</div>
+
+		<script src="../../reveal/lib/js/head.min.js"></script>
+		<script src="../../reveal/js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: '../../reveal/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../reveal/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../reveal/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../reveal/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../reveal/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../reveal/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

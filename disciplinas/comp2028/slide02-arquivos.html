@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>COMP2028 - Laboratório de Computação III | Arquivos</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic);
+
+      body {
+        font-family: 'Open Sans';
+        font-size: 24px;
+      }
+
+      p, ul, li {
+        font-size: 24px;
+      }
+
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+
+      img {
+          display: block;
+          margin-left: auto;
+          margin-right: auto
+      }
+
+      .imgteste {
+          /* Set rules to fill background */
+          min-height: 100%;
+          min-width: 1024px;
+
+          /* Set up proportionate scaling */
+          width: 100%;
+          height: auto;
+
+          /* Set up positioning */
+          position: fixed;
+          top: 0;
+          left: 0;
+        }
+
+        .bg {
+          position: fixed;
+          top: 0;
+          left: 0;
+
+          /* Preserve aspet ratio */
+          min-width: 100%;
+          min-height: 100%;
+        }
+
+        .inverse {
+                background: #272822;
+                color: #777872;
+                text-shadow: 0 0 20px #333;
+              }
+        .inverse h1, .inverse h2 {
+          color: #f3f3f3;
+          line-height: 0.8em;
+        }
+
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# COMP2028 - Laboratório de Computação III
+## Mario H. Adaniya
+
+---
+class: center, middle, inverse
+
+# Arquivos
+
+---
+# Agenda
+
+1. Arquivos
+2. I/O Stream
+
+  a. Byte Stream
+
+  b. Character Stream
+  c. Buffer
+  d. `Scanner` e `format()`
+  e. Data Stream
+  f. Object Stream
+
+---
+
+# Arquivos
+
+ - Trabalhar com arquivos é a nossa primeira forma de persistir dados.
+ - Temos basicamente duas formas de salvar a informação:
+    - **binário**
+    - **texto**.
+
+---
+# Arquivos
+
+ - o que eu quero guardar?
+ - porquê eu quero guardar?
+ - preciso salvar toda as informações ou apenas partes?
+ - preciso dar acesso a essa informação para outros?
+ - ... e muitas outras perguntas!
+
+---
+## I/O Stream
+
+Um **I/O Stream**[^1]** **representa um uma fonte de entrada ou um destino de saída, e pode representar diversos tipos de fontes como: arquivos em disco, dispositivos, outros programas, posições de memória, etc. Um stream ainda suporta diferentes tipos de dados: bytes, tipos primitivos de dados, caracteres \(localizados\) e objetos.
+
+Então, podemos concluir que um stream é uma sequência de dados.
+
+---
+## I/O Stream
+
+![](http://docs.oracle.com/javase/tutorial/figures/essential/io-ins.gif)
+
+---
+## I/O Stream
+
+![](http://docs.oracle.com/javase/tutorial/figures/essential/io-outs.gif)
+
+---
+### **Byte Streams**
+
+Utilizamos nos programas **Byte streams** que executam a leitura de **input** e **output** de 1byte \(8-bit\). Todas as classes `byte stream` descendem de [`InputStream`](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html) e [`OutputStream`](https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html). Vamos ver um exemplo simples abaixo para melhorar o entendimento das coisas.
+
+---
+### **Byte Streams**
+
+```java
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class SimpleCopy{
+    public static void main (String args[]) throws IOException{
+        FileInputStream in = null;
+        FileOutputStream out = null;
+
+        try {
+            in = new FileInputStream("camoes.txt");
+            out = new FileOutputStream("outcamoes.txt");
+            int c;
+
+            while ((c = in.read()) != -1) {
+                out.write(c);
+            }
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+            if (out != null) {
+                out.close();
+            }
+        }
+}
+```
+
+---
+class: center, middle
+
+Quais problemas poderiam ocorrer na execução do `SimpleCopy`?
+
+---
+### **Byte Streams**
+
+ - não encontrar ou não conseguir abrir um dos arquivos
+ - bytes corrompidos
+ - E outros erros ainda poderiam ocorrer.
+
+Uma boa prática é **sempre** feche os **streams**, e é possível ver no código, que devido ao bloco `finally`, nós garantimos que os dois streams são fechados. Isto ajuda no diminuir o desperdicio de recursos.
+
+Mas a ideia de usar cópia byte por byte é uma forma "baixo nível", mas existem outros métodos que veremos a seguir.
+
+---
+### Character Stream
+
+Se com **Byte streams** enviamos bytes de um lado para outro, com **Character Stream** enviamos caracteres de um lado para outro. Em Java, os valores são armazenados usando a convenção `Unicode`, que por sua vez, os I/O stream traduzem internamente para o formato da localidade, geralmente é o `ASCII`.
+
+Se utilizado corretamente, a internacionalização traduz automaticamente de e para o conjunto de caracteres local. Para maiores informações sobre, acessem [aqui](http://docs.oracle.com/javase/tutorial/i18n/intro/index.html).
+
+---
+### Character Stream
+
+```java
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class SimpleCharacterCopy{
+    public static void main (String args[]) throws IOException{
+        FileReader in = null;
+        FileWriter out = null;
+
+        try {
+            in = new FileReader("camoes.txt");
+            out = new FileWriter("outcamoes.txt");
+            int c;
+
+            while ((c = in.read()) != -1) {
+                out.write(c);
+            }
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
+}
+```
+---
+### Buffer
+
+Um grande problema da utilização direta de das classes `FileInputStream, FileOutputStream, FileReader, FileWriter` é o **overhead** causado pelas requisições, uma vez que elas são chamadas que são tratadas diretamente pelo SO.
+
+Para minimizar situações como essa, em Java, temos a implementação dos **Buffered Streams**.
+
+---
+### Buffer
+
+O buffer de entrada \(_input_\) lê dados da memória, de um espaço chamado de **buffer**, as chamadas nativas somente são utilizadas, se o buffer estiver vazio. E para o buffer de saída, o inverso ocorre, ele escreve dados no espaço de memória reservado, e apenas faz a chamada nativa quando o buffer esta cheio.
+
+Para fazer um programa que não utiliza buffer, passar a utiliza-lo, basta passarmos como parâmetro no construtor do buffer, como exemplo: `in = new BufferedReader(new FileReader("camoes.txt"));`
+
+---
+### Scanner e format()
+
+ - Informações e dados organizados de uma forma que nós entendemos.
+ - o Java possui duas APIs: `Scanner` e `Format`.
+   - O `Scanner` quebra as entradas em tokens, para facilitar a manipulação dos dados
+   - O `Format` auxilia para deixar as informações legível para nós.
+
+---
+### Scanner e format()
+
+- O `Scanner` é do package `java.util`, portanto, para utilizar é necessário a sua importação.
+- Por padrão, quando utilizamos o `Scanner`, ele separa os tokens por espaços em branco \(caracteres em branco, tabs, fim de linha, para maiores detalhes leia a [documentação](https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html#isWhitespace-char-)\).
+
+---
+### Scanner e format()
+
+"**O rato roeu a roupa do rei de Roma.**",
+
+**tokens**: `[O] [rato] [roeu] [a] [roupa] [do] [rei] [de] [Roma].`
+
+---
+### Scanner e format()
+
+```java
+import java.io.*;
+import java.util.Scanner;
+
+public class SimpleBuffScanner{
+    public static void main (String args[]) throws IOException{
+        BufferedWriter out = null;
+        Scanner scanner = null;
+
+        try {
+            scanner = new Scanner(new BufferedReader(new FileReader("camoes.txt")));
+            out = new BufferedWriter(new FileWriter("outbuffcamoes.txt"));
+
+            while (scanner.hasNext()){
+                out.write(scanner.next());
+                out.write("\n");
+            }
+
+        } finally {
+            if (scanner != null) {
+                scanner.close();
+            }
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
+}
+```
+
+---
+### Scanner e format()
+
+Para usar um delimitador de token diferente, é só utilizar o `useDelimiter()` e especificar uma expressão regular ou uma `String`, vide como exemplo o código abaixo.
+
+---
+### Scanner e format()
+
+```java
+import java.io.*;
+import java.util.Scanner;
+
+public class ScannerUsingDelimiter{
+    public static void main (String args[]) throws IOException{
+        BufferedWriter out = null;
+        Scanner scanner = null;
+
+        try {
+            scanner = new Scanner(new BufferedReader(new FileReader("camoes.txt")));
+            scanner.useDelimiter(";");
+            out = new BufferedWriter(new FileWriter("outdelimitcamoes.txt"));
+
+            while (scanner.hasNext()){
+                out.write(scanner.next());
+                out.write("\n");
+            }
+
+        } finally {
+            if (scanner != null) {
+                scanner.close();
+            }
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
+}
+```
+
+---
+### Scanner e format()
+
+Nos exemplos acima, o `Scanner` trata todos os dados como `String`, mas ele não lê apenas `String`.
+É possível trabalhar com os tipos primitivos de Java: `byte, short, int, long, double, float`, além de `BigInteger` e `BigDecimal`.
+
+---
+### Scanner e format()
+
+O `format()` é um método utilizado pelos objetos de Stream de saída: `PrintStream` ou `PrintWriter`, que consiste em trabalhar com um texto estático, aplicando os formatadores especificados. O código abaixo demonstra a aplicação do método.
+
+```java
+public class FormatterExample{
+    public static void main (String args[]){
+        System.out.format("%f %n", Math.PI);
+        System.out.format("%1$+020.10f %n", Math.PI);
+        System.out.format("%f, %<+010.9f %n", Math.PI);
+    }
+}
+```
+
+Maiores informações sobre formatação, acessem a [documentação](http://docs.oracle.com/javase/tutorial/essential/io/formatting.html).
+
+---
+### Data Stream
+
+Os _**Data Stream**_ suportam tipos primitivos: `boolean, char, bytes, short, int, long, float, double, String`, e implementam os métodos das interfaces `DataInput` ou `DataOutput`. Observe os dois exemplos abaixo.
+
+---
+### Data Stream
+
+```java
+import java.io.*;
+import java.util.Scanner;
+
+public class SimpleWriteDataStream{
+    static final double[] prices = { 19.99, 9.99, 99.99 };
+    static final int[] units = { 12, 8, 13 };
+    static final String[] descs = {
+        "Java T-shirt",
+        "Java Mug",
+        "Duke Juggling Dolls"
+    };
+
+    public static void main (String args[]) throws IOException{
+        DataOutputStream out = null;
+
+        try {
+            out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("outdatastream")));
+
+            for(int i = 0; i < prices.length; i++){
+                out.writeDouble(prices[i]);
+                out.writeInt(units[i]);
+                out.writeUTF(descs[i]);
+            }
+
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
+}
+```
+
+---
+### Data Stream
+
+```java
+import java.io.*;
+import java.util.Scanner;
+
+public class SimpleReadDataStream{
+
+    public static void main (String args[]) throws IOException{
+        DataInputStream in = null;
+
+        try {
+            in = new DataInputStream(new BufferedInputStream(new FileInputStream("outdatastream")));
+
+            double price;
+            int unit;
+            String desc;
+
+            while(true){
+                price = in.readDouble();
+                unit = in.readInt();
+                desc = in.readUTF();
+                System.out.format("You ordered %d" + " units of %s at $%.2f%n", unit, desc, price);
+            }
+
+        }catch(EOFException ex){
+            System.err.println(ex);
+        }finally {
+            if (in != null) {
+                in.close();
+            }
+        }
+    }
+}
+```
+
+---
+### Data Stream
+
+Os dois exemplos são utilizando Data streams. O primeiro escreve alguns dados em um arquivo, e o segundo recupera estes mesmos dados.
+
+Notem que a ordem de leitura é a mesma que utilizada na escrita, isto por razões óbvias, pois se alterarmos a escrita no arquivo, teremos que alterar na leitura também.
+
+O lado positivo é que o programador possui um controle maior, o lado negativo é que:
+---
+
+![](http://i.giphy.com/MCZ39lz83o5lC.gif)
+
+---
+### Data Stream
+
+O segundo exemplo possui alguns detalhes importantes, notem que no laço de leitura do arquivo, nossa condição é diferente do que usamos até o momento.
+
+Infelizmente o DataStream não possui uma forma mais adequada para encontrar o fim do arquivo, portanto, ele lança uma `EOFException`.
+
+Ainda, no exemplo, um péssimo exemplo de programação é utilizar um `float` para representação monetaria. Para valores precisos, o ideal é utilizar o `java.math.BigDecimal`, mas infelizmente ele não é suportado em DataStreams, somente em Objects Stream, nosso próximo tópico.
+
+---
+### Object Stream
+
+Os _**Objects streams**_ suportam os tipos primitivos e também I/O de objetos. Quase todas as classes suportam serialização dos objetos, basta implementar os métodos necessários da interface `Serializable`.
+
+As classes que implementam os object stream são:  `ObjectInputStream` e `ObjectOutputStream`, que por sua vez implementam `ObjectInput` e  `ObjectOutput`, que são subinterfaces de  `DataInput` e `DataOutput`. O que explica, porque todos os tipos suportados pelo Data Stream estão implementados nos object stream.
+
+Geralmente, quando tentamos ler um objeto `readObject()` e ele não retorna o objeto esperado, se tentarmos fazer um _cast_, podemos dar de cara com um `ClassNotFoundException`. Abaixo, exemplo utilizando Object streams.
+
+---
+### Object Stream
+
+```java
+import java.io.*;
+import java.util.Scanner;
+import java.math.BigDecimal;
+
+public class SimpleWriteObjectStream{
+    static final double[] prices = { 19.99, 9.99, 99.99 };
+    static final int[] units = { 12, 8, 13 };
+    static final String[] descs = {
+        "Java T-shirt",
+        "Java Mug",
+        "Duke Juggling Dolls"
+    };
+
+    public static void main (String args[]) throws IOException{
+        ObjectOutputStream out = null;
+
+        try {
+            out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("outobjectstream")));
+
+            for(int i = 0; i < prices.length; i++){
+                out.writeDouble(prices[i]);
+                out.writeInt(units[i]);
+                out.writeUTF(descs[i]);
+            }
+
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
+}
+```
+
+---
+### Object Stream
+
+
+```java
+import java.io.*;
+import java.util.Scanner;
+
+public class SimpleReadObjectStream{
+
+    public static void main (String args[]) throws IOException{
+        ObjectInputStream in = null;
+
+        try {
+            in = new ObjectInputStream(new BufferedInputStream(new FileInputStream("outobjectstream")));
+
+            double price;
+            int unit;
+            String desc;
+
+            while(true){
+                price = in.readDouble();
+                unit = in.readInt();
+                desc = in.readUTF();
+                System.out.format("You ordered %d" + " units of %s at $%.2f%n", unit, desc, price);
+            }
+
+        }catch(EOFException ex){
+            System.err.println(ex);
+        }finally {
+            if (in != null) {
+                in.close();
+            }
+        }
+    }
+}
+```
+---
+### Object Stream
+
+Uma informação importante sobre Objects stream, é que eles possuem uma complexidade considerável, já que são capazes de guardar e reconstruir objetos que além de terem tipos primitivos, são compostos por outros objetos. A implementação é tão complexa, que se dois objetos fizerem referência a um mesmo objeto, o object stream salva apenas um objeto.
+
+---
+
+### `Path`
+
+É uma classe que representa o caminho em um sistema de arquivos. Um objeto `Path` contém o nome do arquivo e a lista de diretórios para construir o caminho, que é utilizado para procurar e manipular arquivos, refletindo a plataforma em que estiver sendo executada, unix (`/home/joe/foo`) e Windows (`C:\home\joe\foo`). Não é possível comparar caminhos de sistemas diferentes, por mais similares que possam estar.
+
+---
+
+#### Criando um `Path`
+
+Para criar um `Path`, podemos passar um ou mais nomes, podemos incluir a raiz ou um nome de arquivo, e o `Path` consiste de um diretório ou um nome de arquivo. Para criar um `Path`, os métodos abaixo podem ser utilizados:
+
+```java
+  Path p1 = Paths.get("/tmp/foo");
+  Path p2 = Paths.get(args[0]);
+  Path p3 = Paths.get(URI.create("file:///Users/joe/FileTest.java"));
+  Path p5 = Paths.get(System.getProperty("user.home"),"logs", "foo.log");
+```
+
+Notem a utilização da classe helper `Paths`, o método `Paths.get()` é uma simplificação de `FileSystems.getDefault().getPath()`.
+
+---
+
+#### Informações sobre o caminho
+
+O `Path` armazena o nome dos elementos em uma sequência, o elemento mais alto na hierarquia estará localizado no indice `0`, e o elemento mais baixo estará localizado no índice `n-1`, onde `n` é o número de elementos em `Path`. Existem métodos que retornam elementos individuais ou uma subsequência do `Path` usando os índices.
+
+Os seguintes métodos podem ser utilizados:
+
+```java
+  path.toString(); // Returna uma String que representa o Path
+  path.getFileName(); // Retorna o nome de arquivo ou o último elemento da sequência de nomes
+  path.getName(0); // Retorna o caminho correspondente ao índice
+  path.getNameCount(); //Retona o número de elementos do caminho
+  path.subpath(0,2); // Retorna um subsequência
+  path.getParent(); //Retorna o caminho pai do diretório
+  path.getRoot(); //Retorna a raiz do caminho
+```
+---
+
+Ainda nos métodos para utilizarmos as informações do `Path`, temos três métodos:
+
+  * `toAbsolutePath()` : Método que converte o caminho em caminho absoluto;
+  * `toRealPath()` : Retorna o caminho "real" de um arquivo, ele executa alguns passos que são transparentes para o usuário, como resolver _symbolic links_, ou converter um caminho relativo em absoluto;
+  * `toURI()` :   Retorna um URI (_Uniform Resource Identifiers_)
+
+  É possível também comparar os `Paths` através do método: `equals()`.
+
+---
+
+### Files
+
+A classe `Files` também é encontrada no package `java.nio.file`. Ela oferece um conjunto de métodos **estáticos** para leitura, escrita e manipulação de arquivos e diretórios.
+
+ * liberação dos recursos do sistema é extremamente importante
+ * `Exceptions`
+ * _method chaining_ ou Método em cadeia
+
+???
+Assim como discutimos anteriormente, é fundamental ter atenção em alguns pontos quanto utilizamos I/O, a liberação dos recursos do sistema é extremamente importante. Como a maioria dos recursos discutidos aqui implementam ou extendem `java.io.Closeable`, é importante invocar o método `close()`. Tratar as exceções é outro ponto de destaque, inclusive, utilizar o `finally` para chamar os métodos para liberar os recursos. Todos os métodos que trabalham com arquivos podem lançar `IOException`, mas existe `java.nio.file.FileSystemException` que retorna informações mais precisas acerca das exceções.
+
+Outro conceito importante quanto trabalhamos com métodos relacionados a I/O, é o _method chaining_ ou método em cadeia. Nada mais é do que invocar um método, que retorna um objeto, que imediatamente invoca outro método, que também retorna outro objeto, e chama outro método, e assim por diante. Por exemplo: `Charset.defaultCharset().decode(buf).toString();`, isto é bom para produzir um código compacto e evita a declaração de muitas variaveis temporarias. O lado negativo é a legibilidade, pois muitas chamadas podem tornar o código de difícil leitura.
+
+---
+#### Ações em um arquivo ou diretório
+
+Assim que você instancia um objeto `Path`, temos uma representação de um arquivo ou diretório, mas como saber se ele realmente existe? Que tipo de acesso é possível realizar sobre ele? Para responder estas, e muitas outras perguntas, temos os seguintes métodos:
+
+  * `exists(Path path,LinkOption... options)` :
+  * `notExists(Path path,LinkOption... options)` :
+
+---
+Estes métodos podem ter os possíveis resultados:
+  - O arquivo existe;
+  - O arquivo não existe;
+  - O status do arquivo é desconhecido.
+
+Notem que ele pode ser desconhecido por alguns motivos, o mais comum é o programa não ter permissão de acesso.
+
+É como também a confusão entre `!Files.exists(path)`  e `Files.notExists(path)`, mas os dois métodos que não são equivalentes. Se `exists` e `notExists` retornam `false`, a existência do arquivo não pode ser verificada.
+
+---
+Além de verificar a existência do arquivo ou diretório, também é possível verificar se as permissões de leitura, escrita e execução estão autorizadas, através dos métodos:
+
+  * `isReadable(Path)` :
+  * `isWritable(Path)` :
+  * `isExecutable(Path)`:
+
+A comparação entre caminhos é feita pelo seguinte método: `isSameFile(Path, Path)`. Isto é importante, para sistemas que utilizam _symbolic link_ pois é possível termos dois caminhos que levam ao mesmo arquivo.
+
+---
+
+Para excluir um arquivo, diretório ou _symlink_, basta chamar o método `delete(Path)`. No caso de ser um _symlink_, o método não deleta o arquivo em si, apenas o link.
+
+Ele pode lançar as seguintes Exceptions se falhar:
+  * `NoSuchFileException`
+  * `DirectoryNotEmptyException`
+  * `IOException`
+  * `SecurityException`.
+
+---
+Como trabalhamos com arquivo, podemos ter a necessidade de copiar ele. Para isto, o método `copy(Path, Path, CopyOption...)` é utilizado.
+
+Se um diretório for copiado, o seu conteúdo não é copiado junto. No `CopyOption` passado pode ser: `REPLACE_EXISTING, COPY_ATTRIBUTES` ou `NOFOLLOW_LINKS`.
+
+Se nenhum parâmetro `CopyOption` for passado, e o arquivo já existir, ele não será sobrescrito e uma `FileAlreadyExistsException` será lançada.
+
+Além de copiar, também é possível mover o arquivo ou diretório através do método `move(Path, Path, CopyOption ...)`. Assim como a copia, tamném é necessário especificar o parâmetro `CopyOption` ou tratar as `Exceptions`.
+---
+class: center, middle
+
+E neste [link](http://docs.oracle.com/javase/tutorial/essential/io/fileAttr.html) temos os metódos que extraem a informação dos metadados do arquivo ou diretório.
+
+???
+| Métodos                                                                                |
+|--------------------------------------------------------|---------------------------------|
+|`size(Path)` | 	Returns the size of the specified file in bytes. |
+|`isDirectory(Path, LinkOption)` |	Returns true if the specified Path locates a file that is a directory. |
+|`isRegularFile(Path, LinkOption...)` |	Returns true if the specified Path locates a file that is a regular file. |
+|`isSymbolicLink(Path)` |	Returns true if the specified Path locates a file that is a symbolic link.|
+|`isHidden(Path)` |	Returns true if the specified Path locates a file that is considered hidden by the file system.|
+|`getLastModifiedTime(Path, LinkOption...)` |
+|`setLastModifiedTime(Path, FileTime)`      |	Returns or sets the specified file's last modified time.|
+|`getOwner(Path, LinkOption...)` | |
+|`setOwner(Path, UserPrincipal)` |	Returns or sets the owner of the file.|
+|`getPosixFilePermissions(Path, LinkOption...)` | |
+|`setPosixFilePermissions(Path, Set<PosixFilePermission>)` |	Returns or sets a file's POSIX file permissions. |
+|`getAttribute(Path, String, LinkOption...)` | |
+|`setAttribute(Path, String, Object, LinkOption...)` | 	Returns or sets the value of a file attribute. |
+
+---
+# Referências
+
+[http://docs.oracle.com/javase/tutorial/essential/io/bytestreams.html](http://docs.oracle.com/javase/tutorial/essential/io/bytestreams.html)
+
+---
+
+.bg[ ![](http://i.giphy.com/upg0i1m4DLe5q.gif)]
+
+
+    </textarea>
+    <script src="../assets/js/remark.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create({
+          highlightStyle: 'monokai',
+          highlightLanguage: 'remark',
+          highlightLines: true
+        }) ;
+    </script>
+  </body>
+</html>

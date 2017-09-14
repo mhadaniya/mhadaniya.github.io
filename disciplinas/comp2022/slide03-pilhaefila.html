@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>COMP2022 Técnicas de Programação II | Pilha e Fila</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/mystyle.css">
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, inverse
+
+# COMP2022
+# Técnicas de Programação II
+
+---
+.panel[.panel-danger[
+.panel-heading[
+# <i class="fa fa-exclamation" aria-hidden="true"></i> Disclaimer]
+.panel-body[
+Esta apresentação é um compilado de diversos materiais e inspirações de outros tantos que encontrei nestes anos lecionando a disciplina. **.high[Não é um material que de forma alguma deve ser utilizado como única fonte de estudos]**.
+
+A probabilidade de haver erros no texto é alto, pois o mesmo só é revisado por mim, que já possuo vicios do próprio texto, portanto, me desculpe e fico no aguardo de um alô com os pontos para correção.
+]
+]]
+
+---
+class: center, middle, inverse
+
+# Fila e Pilha
+
+---
+## Objetivos
+
+Entender os conceitos e aplicações de:
+- Fila
+- Pilha
+
+---
+class: center, middle
+
+# Conceitos iniciais
+
+---
+## Conceitos iniciais
+
+- As filas e pilhas representam estruturas de dados importantes
+- Filas e pilhas são estruturas usualmente implementadas através de listas
+- A política de manipulação dos elementos da lista é *"especial"*
+
+---
+class: center, middle
+
+# Filas
+
+---
+## Filas
+
+![](http://www.jornalatribuna.com.br/wp-content/uploads/2016/01/FilaBanco.jpg)
+
+---
+## Filas
+
+- A inserção é feita por uma extremidade e a remoção é feita por outra extremidade
+- O primeiro elemento a entrar, será o primeiro a elemento a sair
+  * **FIFO** (**F**irst **I**n, **F**irst **O**ut)
+  * **PEPS** (**P**rimeiro que **E**ntra, **P**rimeiro que **S**ai)
+- Exemplos:
+  * Fila de impressão, playlist (música, vídeo, etc...)
+
+---
+## Filas
+
+![](assets/img/sl03/fig01.png)
+
+---
+## Filas
+
+ - Implementação dos seguintes métodos:
+   * `enfileirar(Node node);`
+   * `desenfileirar();`
+   * `primeiro()`
+   * `ultimo()`
+
+---
+## Filas
+
+```
+public class Fila{
+
+  public void enfileirar(Node node);
+  public void desenfileirar();
+  public boolean filaVazia();
+
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig02.png)]
+
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig03.png)]
+
+```java
+*public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig03.png)]
+
+```java
+public void enfileirar(Node node){
+*   if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig04.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+*      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig05.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+*      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig05.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+*    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig06.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+*}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig07.png)]
+
+```java
+*public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig07.png)]
+
+```java
+public void enfileirar(Node node){
+*    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig07.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+*    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig08.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+*      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig09.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+*      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig09.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+*    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig10.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+*}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig11.png)]
+
+```java
+*public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig11.png)]
+
+```java
+public void enfileirar(Node node){
+*    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig11.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+*    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig12.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+*      ultimo.setProximo(node);
+      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig13.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+*      ultimo = node;
+    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig13.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+*    }
+}
+```
+
+---
+## Filas: `enfileirar`
+
+.insert[![](assets/img/sl03/fig14.png)]
+
+```java
+public void enfileirar(Node node){
+    if(filaVazia()){
+      primeiro = node;
+      ultimo = node;
+    }else{
+      ultimo.setProximo(node);
+      ultimo = node;
+    }
+*}
+```
+
+---
+## Filas: `desenfileirar`
+
+.insert[![](assets/img/sl03/fig14.png)]
+
+
+```java
+public void desenfileirar(){
+    primeiro = primeiro.getProximo();
+}
+```
+
+---
+## Filas: `desenfileirar`
+
+.insert[![](assets/img/sl03/fig14.png)]
+
+
+```java
+*public void desenfileirar(){
+    primeiro = primeiro.getProximo();
+}
+```
+
+---
+## Filas: `desenfileirar`
+
+.insert[![](assets/img/sl03/fig15.png)]
+
+
+```java
+public void desenfileirar(){
+*    primeiro = primeiro.getProximo();
+}
+```
+
+---
+## Filas: `desenfileirar`
+
+.insert[![](assets/img/sl03/fig16.png)]
+
+
+```java
+public void desenfileirar(){
+*    primeiro = primeiro.getProximo();
+}
+```
+
+---
+## Filas: `desenfileirar`
+
+.insert[![](assets/img/sl03/fig17.png)]
+
+
+```java
+public void desenfileirar(){
+    primeiro = primeiro.getProximo();
+*}
+```
+
+---
+## Filas: `desenfileirar`
+
+.insert[![](assets/img/sl03/fig18.png)]
+
+
+```java
+*public void desenfileirar(){
+    primeiro = primeiro.getProximo();
+}
+```
+
+---
+## Filas: `desenfileirar`
+
+.insert[![](assets/img/sl03/fig19.png)]
+
+
+```java
+public void desenfileirar(){
+*    primeiro = primeiro.getProximo();
+}
+```
+
+---
+## Filas: `desenfileirar`
+
+.insert[![](assets/img/sl03/fig20.png)]
+
+
+```java
+public void desenfileirar(){
+*    primeiro = primeiro.getProximo();
+}
+```
+
+---
+## Filas: `desenfileirar`
+
+.insert[![](assets/img/sl03/fig21.png)]
+
+
+```java
+public void desenfileirar(){
+    primeiro = primeiro.getProximo();
+*}
+```
+
+---
+class: middle, center
+
+# Pilhas
+
+---
+## Pilhas
+
+![](https://previews.123rf.com/images/prometeus/prometeus1307/prometeus130700387/20727275-A-boy-sitting-on-a-pile-of-books-and-reading-a-book-Education--Stock-Photo.jpg)
+
+---
+## Pilhas
+
+- A inserção é feita por uma extremidade e a remoção é feita pela mesma extremidade
+  * O nome dessa extremidade é **topo**
+- O primeiro elemento a entrar, é o último elemento a sair
+  * **FILO** (**F**irst **I**n, **L**ast **O**ut)
+  * **UEPS** (**U**ltimo que **E**ntra, **P**rimeiro que **S**ai)
+- Exemplos:
+  * Famoso botão "undo" de editores de texto, backtracking, processamento de linguagem (compiladores, etc.)
+
+---
+## Pilhas
+
+![](assets/img/sl03/fig22.png)
+
+---
+## Pilhas: `empilhar`
+
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig23.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+*public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig24.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+*  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig24.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+*    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig25.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+*  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig25.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+*}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig25a.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+*public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig26.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+*  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig26.png)
+  ]
+]
+
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+*  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig26.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+*    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig27.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+*    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig28.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+*  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig28.png)
+  ]
+]
+
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+*}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig29.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+*public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig30.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+*  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig30.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+*  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig30.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+*    node.setProximo(topo);
+    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig31.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+*    topo = node;
+  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig32.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+*  }
+}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig32.png)
+  ]
+]
+
+---
+## Pilhas: `empilhar`
+
+.row[
+  .col-md-6[
+```java
+public void empilhar(Node node){
+  if(pilhaVazia()){
+    topo = node;
+  }else{
+    node.setProximo(topo);
+    topo = node;
+  }
+*}
+```
+  ]
+  .col-md-6[
+  ![](assets/img/sl03/fig33.png)
+  ]
+]
+
+---
+## <i class="fa fa-book" aria-hidden="true"></i> Referências
+
+
+[<i class="fa fa-external-link" aria-hidden="true"> Data Structure Visualizations</i>](https://www.cs.usfca.edu/~galles/JavascriptVisual/)
+
+<i class="fa fa-book" aria-hidden="true"></i>  Puga, Sandra; Risseti, Gerson. **Lógica de Programação e Estrutura de dados.** 3a Edição. Editora Pearson. 2016.
+
+[<i class="fa fa-slideshare" aria-hidden="true"></i> Maria Adriana Vidigal de Lima. Pilhas e Filas - Conceitos e Implementação em linguagem C. Março 2009.](http://www.facom.ufu.br/~madriana/EBD/Pilha.pdf)
+
+
+---
+class: bg-pic
+background-image: url(http://i.giphy.com/upg0i1m4DLe5q.gif)
+
+
+    </textarea>
+    <script src="../assets/js/remark.min.js">
+    </script>
+    <script>
+    var slideshow = remark.create({
+      highlightLines: true,
+    });
+    </script>
+  </body>
+</html>

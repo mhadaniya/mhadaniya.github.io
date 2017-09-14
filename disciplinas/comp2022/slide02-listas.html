@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>COMP2022 Técnicas de Programação II | Lista</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/mystyle.css">
+    <script src="https://use.fontawesome.com/4cb0a616c1.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, inverse
+
+# COMP2022
+# Técnicas de Programação II
+
+---
+.panel[.panel-danger[
+.panel-heading[
+# <i class="fa fa-exclamation" aria-hidden="true"></i> Disclaimer]
+.panel-body[
+Esta apresentação é um compilado de diversos materiais e inspirações de outros tantos que encontrei nestes anos lecionando a disciplina. **.high[Não é um material que de forma alguma deve ser utilizado como única fonte de estudos]**.
+
+A probabilidade de haver erros no texto é alto, pois o mesmo só é revisado por mim, que já possuo vicios do próprio texto, portanto, me desculpe e fico no aguardo de um alô com os pontos para correção.
+]
+]]
+
+---
+class: center, middle, inverse
+
+# Listas
+
+---
+## Objetivos
+
+Entender os conceitos de listas:
+- Lista encadeadas (dinâmicas)
+- Lista circular
+- Lista duplamente encadeada
+- Lista duplamente encadeada circular
+
+---
+class: center, middle
+
+# Conceitos iniciais
+
+---
+## Conceitos iniciais
+
+Programas são formados por algoritmos e estrutura de dados, desta maneira, é importante ter um conhecimento acerca das estruturas.
+
+Escolher a estrutura mais adequada para tratar o problema de maneira eficiente, que proporcione um acesso as informações.
+
+---
+class: center, middle
+
+# Lista encadeada
+
+
+---
+## Lista encadeada
+
+- O QUE VOCÊS ENTENDEM POR LISTA?
+- O QUE EU PRECISO PARA TER UMA LISTA?
+- POR QUÊ UTILIZAR LISTA?
+
+---
+## Lista encadeada
+
+![](assets/img/sl02/fig01.png)
+
+---
+## Lista encadeada
+
+![](assets/img/sl02/fig02.png)
+
+---
+## Lista encadeada
+
+.row[
+  .col-md-6[
+  Um nó possui basicamente:
+  - \#valor da informação;
+  - próxima posição
+  ]
+  .col-md-6[
+  ![](assets/img/sl02/fig03.png)
+  ]
+]
+
+--
+
+```java
+public class Node{
+
+   int valor;
+   Node proximo;
+
+}
+```
+
+---
+class: middle, center
+
+## E se for necessário mais informações?
+
+--
+
+Basta criar outros campos, para cada informação que se deseja armazenar.
+
+---
+## Lista encadeada
+
+.row[
+  .col-md-6[
+```java
+public class NodeProduto{
+
+   int valor;
+   String descricao;
+   int quantidade;
+   NodeProduto proximo;
+
+}
+```
+]
+.col-md-6[
+  ![](assets/img/sl02/fig04.png)
+]]
+
+---
+## Lista encadeada
+
+# Mas e a lista, como fica sua implementação?
+
+--
+
+```java
+public class ListaEncadeada {
+
+  Node inicio;
+
+  public void inserir(int valor);
+  public void remover(int valor);
+  public void listar();
+}
+```
+---
+class: middle, center
+
+## Inserção
+
+---
+## Inserção
+
+1. inserção no início
+2. Inserção no final
+3. Inserção na n-ésima posição
+
+---
+class: center, middle
+
+# Lista encadeada: 1. inserção no início
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert[![](assets/img/sl02/fig05.png)]
+
+
+```java
+public void inserirInicio(Node node){
+    if(inicio == null){
+        inicio = node;
+    }else{
+        node.setProximo(inicio);
+        inicio = node;
+    }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert[![](assets/img/sl02/fig06.png)]
+
+
+```java
+*public void inserirInicio(Node node){
+    if(inicio == null){
+        inicio = node;
+    }else{
+        node.setProximo(inicio);
+        inicio = node;
+    }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert[![](assets/img/sl02/fig06.png)]
+
+
+```java
+public void inserirInicio(Node node){
+*   if(inicio == null){
+        inicio = node;
+    }else{
+        node.setProximo(inicio);
+        inicio = node;
+    }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert[![](assets/img/sl02/fig07.png)]
+
+
+```java
+public void inserirInicio(Node node){
+    if(inicio == null){
+*      inicio = node;
+    }else{
+        node.setProximo(inicio);
+        inicio = node;
+    }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert[![](assets/img/sl02/fig07.png)]
+
+
+```java
+public void inserirInicio(Node node){
+    if(inicio == null){
+       inicio = node;
+    }else{
+        node.setProximo(inicio);
+        inicio = node;
+*   }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert[![](assets/img/sl02/fig08.png)]
+
+
+```java
+*public void inserirInicio(Node node){
+    if(inicio == null){
+       inicio = node;
+    }else{
+        node.setProximo(inicio);
+        inicio = node;
+    }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert[![](assets/img/sl02/fig08.png)]
+
+
+```java
+public void inserirInicio(Node node){
+*   if(inicio == null){
+       inicio = node;
+    }else{
+        node.setProximo(inicio);
+        inicio = node;
+    }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert[![](assets/img/sl02/fig08.png)]
+
+
+```java
+public void inserirInicio(Node node){
+   if(inicio == null){
+       inicio = node;
+*   }else{
+        node.setProximo(inicio);
+        inicio = node;
+    }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert[![](assets/img/sl02/fig08.png)]
+
+
+```java
+public void inserirInicio(Node node){
+   if(inicio == null){
+       inicio = node;
+*   }else{
+        node.setProximo(inicio);
+        inicio = node;
+    }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert2[![](assets/img/sl02/fig09.png)]
+
+
+```java
+public void inserirInicio(Node node){
+   if(inicio == null){
+       inicio = node;
+   }else{
+*       node.setProximo(inicio);
+        inicio = node;
+    }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert2[![](assets/img/sl02/fig10.png)]
+
+
+```java
+public void inserirInicio(Node node){
+   if(inicio == null){
+       inicio = node;
+   }else{
+        node.setProximo(inicio);
+*       inicio = node;
+    }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert2[![](assets/img/sl02/fig10.png)]
+
+
+```java
+public void inserirInicio(Node node){
+   if(inicio == null){
+       inicio = node;
+   }else{
+        node.setProximo(inicio);
+        inicio = node;
+*   }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert2[![](assets/img/sl02/fig11.png)]
+
+
+```java
+*public void inserirInicio(Node node){
+   if(inicio == null){
+       inicio = node;
+   }else{
+        node.setProximo(inicio);
+        inicio = node;
+   }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert2[![](assets/img/sl02/fig11.png)]
+
+
+```java
+public void inserirInicio(Node node){
+*  if(inicio == null){
+       inicio = node;
+   }else{
+        node.setProximo(inicio);
+        inicio = node;
+   }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert2[![](assets/img/sl02/fig11.png)]
+
+
+```java
+public void inserirInicio(Node node){
+   if(inicio == null){
+       inicio = node;
+*  }else{
+        node.setProximo(inicio);
+        inicio = node;
+   }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert2[![](assets/img/sl02/fig12.png)]
+
+
+```java
+public void inserirInicio(Node node){
+   if(inicio == null){
+       inicio = node;
+   }else{
+*       node.setProximo(inicio);
+        inicio = node;
+   }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert2[![](assets/img/sl02/fig12a.png)]
+
+
+```java
+public void inserirInicio(Node node){
+   if(inicio == null){
+       inicio = node;
+   }else{
+*       node.setProximo(inicio);
+        inicio = node;
+   }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert2[![](assets/img/sl02/fig13.png)]
+
+
+```java
+public void inserirInicio(Node node){
+   if(inicio == null){
+       inicio = node;
+   }else{
+        node.setProximo(inicio);
+*       inicio = node;
+   }
+}
+```
+
+---
+## Lista encadeada: 1. inserção no início
+
+.insert2[![](assets/img/sl02/fig13.png)]
+
+
+```java
+public void inserirInicio(Node node){
+   if(inicio == null){
+       inicio = node;
+   }else{
+        node.setProximo(inicio);
+        inicio = node;
+*  }
+}
+```
+
+---
+class: center, middle
+
+# Lista encadeada: 2. inserção no final
+
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig05.png)]
+
+
+```java
+public void inserirFim(Node node){
+    if(inicio == null){
+        inicio = node;
+    }else{
+        Node aux = inicio;
+        while(aux.getProximo() != null){
+            aux = aux.getProximo();
+        }
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig06.png)]
+
+
+```java
+* public void inserirFim(Node node){
+     if(inicio == null){
+         inicio = node;
+     }else{
+         Node aux = inicio;
+         while(aux.getProximo() != null){
+             aux = aux.getProximo();
+         }
+         aux.setProximo(node);
+     }
+ }
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig06.png)]
+
+
+```java
+public void inserirFim(Node node){
+* if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig07.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+*    inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig07.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+* }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig14.png)]
+
+
+```java
+*public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig14.png)]
+
+
+```java
+public void inserirFim(Node node){
+* if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig14.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+* }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig15.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+*    Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig16.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+*    while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig16.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+*    }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig17.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+*    aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig18.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+* }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig18.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+*}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig19.png)]
+
+
+```java
+*public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig19.png)]
+
+
+```java
+public void inserirFim(Node node){
+* if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig19.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+* }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig20.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+*    Node aux = inicio;
+     while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig21.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+*    while(aux.getProximo() != null){
+         aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig22.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+*        aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig23.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+*    while(aux.getProximo() != null){
+        aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig23.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+        aux = aux.getProximo();
+*    }
+     aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig24.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+        aux = aux.getProximo();
+     }
+*    aux.setProximo(node);
+  }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig25.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+        aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+* }
+}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig25.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+        aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+ }
+*}
+```
+
+---
+## Lista encadeada: 2. inserção no final
+
+.insert2[![](assets/img/sl02/fig26.png)]
+
+
+```java
+public void inserirFim(Node node){
+  if(inicio == null){
+     inicio = node;
+  }else{
+     Node aux = inicio;
+     while(aux.getProximo() != null){
+        aux = aux.getProximo();
+     }
+     aux.setProximo(node);
+ }
+*}
+```
+
+---
+class: center, middle
+
+# Lista encadeada: 3. Inserção na n-ésima posição
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig27.png)]
+
+
+```java
+*public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig27.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+*   if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig27.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+*   }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig27.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+*   }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig28.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+*       Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig29.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+*       int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig29.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+*       while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig30.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+*           aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig31.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+*           aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig32.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+*           posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig32.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+*       while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig32.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+*       }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig33.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+*       node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig34.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+*       aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig35.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+*       aux.setProximo(node);
+    }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig36.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+*   }
+}
+```
+
+---
+## Lista encadeada: 3. Inserção na n-ésima posição
+
+.insert2[![](assets/img/sl02/fig37.png)]
+
+
+```java
+public void inserirNaPosicao(int posicao, Node node){
+    if(posicao == 0){
+        inserirInicio(node);
+    }else if(posicao > getTamanho()){
+        inserirFim(node);
+    }else{
+        Node aux = inicio;
+        int posicao_atual = 1;
+        while(posicao > posicao_atual){
+            aux = aux.getProximo();
+            posicao_atual++;
+        }
+        node.setProximo(aux.getProximo());
+        aux.setProximo(node);
+    }
+*}
+```
+
+---
+class: middle, center
+
+# Remoção
+
+---
+## Lista encadeada
+
+## Remoção
+
+É a função que remove um elemento da lista. Podemos remover sempre o último elemento, sempre o primeiro elemento, por posição ou por valor. Vamos ver o funcionamento de cada uma das funções.
+
+---
+## Lista encadeada: 1. remover sempre primeiro elemento
+
+.insert2[![](assets/img/sl02/fig37.png)]
+
+
+```java
+*public void removerPrimeiro(){
+    Node aux = inicio;
+    inicio = inicio.getProximo();
+    aux = null;
+}```
+
+---
+## Lista encadeada: 1. remover sempre primeiro elemento
+
+.insert2[![](assets/img/sl02/fig38.png)]
+
+```java
+public void removerPrimeiro(){
+*   Node aux = inicio;
+    inicio = inicio.getProximo();
+    aux = null;
+}```
+
+---
+## Lista encadeada: 1. remover sempre primeiro elemento
+
+.insert2[![](assets/img/sl02/fig39.png)]
+
+```java
+public void removerPrimeiro(){
+    Node aux = inicio;
+*   inicio = inicio.getProximo();
+    aux = null;
+}```
+
+---
+## Lista encadeada: 1. remover sempre primeiro elemento
+
+.insert2[![](assets/img/sl02/fig40.png)]
+
+```java
+public void removerPrimeiro(){
+    Node aux = inicio;
+    inicio = inicio.getProximo();
+*   aux = null;
+}```
+
+---
+## Lista encadeada: 1. remover sempre primeiro elemento
+
+.insert2[![](assets/img/sl02/fig41.png)]
+
+```java
+public void removerPrimeiro(){
+    Node aux = inicio;
+    inicio = inicio.getProximo();
+    aux = null;
+*}```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig37.png)]
+
+```java
+*public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+        ant = aux;
+        aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig38.png)]
+
+```java
+public void removerUltimo(){
+*   Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+        ant = aux;
+        aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig42.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+*   Node ant = null;
+    while(aux.getProximo() != null){
+        ant = aux;
+        aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig43.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+*   while(aux.getProximo() != null){
+        ant = aux;
+        aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig44.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+*       ant = aux;
+        aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig45.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+       ant = aux;
+*      aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig45.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+*   while(aux.getProximo() != null){
+       ant = aux;
+       aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig46.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+*       ant = aux;
+       aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig47.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+       ant = aux;
+*       aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig48.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+       ant = aux;
+*       aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig48.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+*    while(aux.getProximo() != null){
+       ant = aux;
+       aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig49.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+*       ant = aux;
+       aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig50.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+       ant = aux;
+*       aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig51.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+       ant = aux;
+*       aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig51.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+*   while(aux.getProximo() != null){
+       ant = aux;
+       aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig51.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+       ant = aux;
+       aux = aux.getProximo();
+*   }
+    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig52.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+       ant = aux;
+       aux = aux.getProximo();
+    }
+*    ant.setProximo(null);
+}
+```
+
+---
+## Lista encadeada: 2. remover sempre último elemento
+
+.insert2[![](assets/img/sl02/fig53.png)]
+
+```java
+public void removerUltimo(){
+    Node aux = inicio;
+    Node ant = null;
+    while(aux.getProximo() != null){
+       ant = aux;
+       aux = aux.getProximo();
+    }
+    ant.setProximo(null);
+*}
+```
+
+---
+class: bg-pic
+background-image: url(http://i.giphy.com/upg0i1m4DLe5q.gif)
+
+
+    </textarea>
+    <script src="../assets/js/remark.min.js">
+    </script>
+    <script>
+    var slideshow = remark.create({
+      highlightLines: true,
+    });
+    </script>
+  </body>
+</html>

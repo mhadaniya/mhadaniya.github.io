@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>COMP2028 - Laboratório de Computação III | JDBC </title>
+    <meta charset="utf-8">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+        @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic);
+        body {
+            font-family: 'Open Sans';
+            font-size: 24px;
+        }
+
+        .bg-pic {
+          background-size: cover;
+        }
+
+        p, ul, li {
+            font-size: 24px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Yanone Kaffeesatz';
+            font-weight: normal;
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 100%;
+            max-height: 490px;
+        }
+
+        .imgteste {
+            /* Set rules to fill background */
+            min-height: 100%;
+            min-width: 1024px;
+            /* Set up proportionate scaling */
+            width: 100%;
+            height: auto;
+            /* Set up positioning */
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            /* Preserve aspet ratio */
+            min-width: 100%;
+            min-height: 100%;
+        }
+
+        .inverse {
+            background: #272822;
+            color: #777872;
+            text-shadow: 0 0 20px #333;
+        }
+
+        .inverse h1,
+        .inverse h2 {
+            color: #f3f3f3;
+            line-height: 0.8em;
+        }
+
+        .remark-code,
+        .remark-inline-code {
+            font-family: 'Ubuntu Mono';
+        }
+
+        .right {
+            float: right;
+            margin-left: 1em;
+        }
+
+        .task {
+            float: right;
+            font-size: 0.9em;
+            padding-top: 0.6em;
+        }
+
+        .task a {
+            color: #080;
+            text-decoration: none;
+        }
+
+        li h3 {
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <textarea id="source">
+
+class: center, middle, inverse
+
+# COMP2028 - Laboratório de Computação III
+
+---
+class: center, middle, inverse
+
+# JDBC
+
+
+---
+name: default
+layout: true
+task: &nbsp;
+
+.task[{{task}}]
+
+---
+task: JDBC
+
+# JDBC
+
+ - ## **J**ava **D**ata**B**ase **C**onnectivity
+ - ## É uma **API (_Application Program Interface_)** para acesso a **SGBD** (Sistemas Gerenciadores de Banco de Dados) relacionais por meio de comandos **SQL (_Structured Query Language_)**
+
+---
+task: JDBC
+
+* ## Mantém a independência de plataforma da linguagem Java
+* ## A API encapsula:
+  - ### o estabelecimento da conexão com o BD
+  - ### o envio de comandos SQL
+  - ### o processamento dos resultados
+
+---
+task: JDBC
+
+ ## 4 tipos:
+
+ * ### Tipo 1: ponte ODBC-JDBC
+    - Usam uma ponte para ter acesso a um banco de dados. Este tipo de solução requer a instalação de software do lado do cliente.
+ * ### Tipo 2: solução com código nativo
+    - Usam uma API nativa. Esses drivers contém métodos Java implementados em C ou C++. Requer software no cliente.
+
+---
+task: JDBC
+
+ * ### Tipo 3: solução 100% Java no cliente
+    - Oferecem uma API de rede via middleware que traduz requisições para API do driver desejado. Não requer software no cliente.
+ * ### Tipo 4: solução 100% Java
+    - Drivers que se comunicam diretamente com o banco de dados usando soquetes de rede. É uma solução puro Java. Não requer código adicional do lado do cliente.
+
+---
+task: JDBC
+
+![](./imgs/sl03-jdbc-types.png)
+
+
+---
+task: JDBC
+
+[![](./imgs/sl03-jdbc-support.png)](http://www.oracle.com/technetwork/java/index-136695.html)
+
+
+---
+task: JDBC
+
+Geralmente, para processar qualquer instrução SQL com JDBC, seguem-se os passos:
+
+## 1. Estabelecer a conexão
+## 2. Criar a instrução
+## 3. Executar a consulta
+## 4. Processar o objeto `ResultSet`
+## 5. Fechar a conexão
+
+---
+class: bg-pic
+background-image: url(http://i.giphy.com/gWFTXUNVs7YGY.gif)
+
+---
+class: center, middle
+
+## Configurar o Driver!
+
+---
+task: JDBC
+
+- A interface Driver é utilizada apenas pelas implementações de drivers JDBC
+- É preciso carregar a classe do driver na aplicação que irá utilizá-lo. Isto pode ser feito com `Class.forName()`:
+
+```java
+Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+```
+
+- Uma aplicação JDBC pode carregar ao mesmo tempo diversos drivers;
+- Para determinar qual driver será usado, usa-se uma URL: `jdbc:<subprotocolo>:<dsn>`
+- Sintaxe depende do fabricante
+
+```
+jdbc:odbc:anuncios
+jdbc:oracle:thin:@200.206.192.216:1521:exemplo
+jdbc:mysql://alnitak.orion.org/clientes
+jdbc:cloudscape:rmi://host:1098/MyDB;create=true
+```
+
+---
+task: JDBC
+
+## 1. Estabelecer a conexão
+
+- A classe `DriverManager` manipula objetos do tipo `Driver`. 
+- Possui métodos para registrar drivers, removê-los ou listá-los. 
+- É usado para retornar `Connection`, que representa uma conexão a um banco de dados, a partir de uma URL JDBC recebida como parâmetro
+
+```
+Connection con = DriverManager.getConnection("jdbc:odbc:dados", "nome","senha");
+```
+
+---
+task: JDBC
+
+## 1. Estabelecer a conexão
+
+```
+String driver = "com.mysql.jdbc.Driver";
+String url = “jdbc:mysql://127.0.0.1:3306/labiii";
+String user = "root";
+String password = "";
+
+try {
+  // conexão
+  Class.forName(driver);
+  conn = DriverManager.getConnection(url, user, password);
+} catch (Exception e) {
+  System.out.println("erro: " + e.getMessage());
+}
+```
+
+---
+task: JDBC
+
+## 2. Criar a instrução
+
+Interfaces que contém métodos implementados em todos os drivers JDBC.
+
+- ### **Connection**:
+  * Representa uma conexão ao banco de dados, que é retornada pelo DriverManager na forma de um objeto.
+- ### **Statement**:
+  * Oferece meios de passar instruções SQL para o sistema de bancos de dados.
+- ### **ResultSet**:
+  * É um cursor para os dados recebidos.
+
+---
+task: JDBC
+
+## 2. Criar a instrução
+
+- `Statement` é uma interface que representa uma instrução SQL.
+- Você executa objetos `Statement`, e geram objetos `ResultSet`, que é uma tabela de dados que representam um conjunto de resultados de banco de dados.
+- Você precisa de um objeto `Connection` para criar um objeto `Statement`.
+
+Obtendo-se um objeto `Connection`, chama-se sobre ele o método `createStatement()` para obter um objeto do tipo `Statement`:
+```
+Statement stmt = con.createStatement()
+```
+que poderá usar métodos como `execute(), executeQuery(), executeBatch() e executeUpdate()` para enviar instruções SQL ao BD.
+
+---
+task: JDBC
+
+## 2. Criar a instrução
+
+Existem três tipos diferentes de declarações.
+- ### Statement
+  * Usado para implementar instruções SQL simples sem parâmetros.
+- ### PreparedStatement
+  * Usado para pré-compilação de instruções SQL que podem conter parâmetros de entrada.
+- ### CallableStatement
+  * Usado para executar procedimentos armazenados que podem conter parâmetros de entrada e saída.
+
+???
+ PreparedStatement extends Statement
+ CallableStatement extends PreparedStatement
+
+---
+task: JDBC
+
+## 2. Criar a instrução
+
+```java
+...
+
+try{
+  Statement stmt = ConexaoSingleton.getInstance().createStatement();
+  ResultSet rs;
+  ArrayList<Funcionario> funcionarios = new ArrayList<>();
+} catch (Exception e) {
+  System.err.println("Got an exception! ");
+  System.err.println(e.getMessage());
+  return null;
+}
+...
+
+```
+---
+task: JDBC
+## 3. Executar a consulta
+
+Para executar uma consulta, basta chamar um método execute do Statement, como o seguinte:
+- **`execute`**: Retorna `true` se o primeiro objeto retornado for um objeto **`ResultSet`**. Utilize este método se a consulta retornar um ou mais objetos **`ResultSet`**.
+- **`executeQuery`**: Retorna um objeto **`ResultSet`**.
+- **`executeUpdate`**: Retorna um inteiro que representa o número de linhas afetadas pelo SQL declaração. Utilize este método se você estiver usando **INSERT**, **DELETE** ou **UPDATE**.
+
+---
+task: JDBC
+## 4. Processar o objeto `ResultSet`
+
+O método `executeQuery()`, da interface `Statement`, retorna um objeto `ResultSet`.
+  - Cursor para as linhas de uma tabela.
+  - Pode-se navegar pelas linhas da tabela recuperar as informações armazenadas nas colunas
+Os métodos de navegação são:
+  - `next(), previous(), absolute(), first()` e `last()`
+Métodos para obtenção de dados:
+  - `getInt(), getString(), getDate(),` ...
+
+---
+task: JDBC
+## 4. Processar o objeto `ResultSet`
+
+| Método de `ResultSet` | Tipos de dados SQL92 |
+| ---------------- |:---------------:|
+| `getInt()`       | `INTEGER`       |
+| `getLong()`      | `BIG INT`       |
+| `getFloat()`     | `REAL`          |
+| `getDouble()`    | `FLOAT`         |
+| `getBignum()`    | `DECIMAL`       |
+| `getBoolean()`   | `BIT`           |
+| `getString()`    | `CHAR, VARCHAR` |
+| `getDate()`      | `DATE`          |
+| `getTime()`      | `TIME`          |
+| `getTimestamp()` | `TIME STAMP`    |
+| `getObject()`    | Blob            |
+
+---
+task: JDBC
+## 4. Processar o objeto `ResultSet`
+
+Geralmente processamos o(s) objeto(s) `ResultSet` através de:
+- uma condicional
+- um laço
+
+---
+task: JDBC
+## 4. Processar o objeto `ResultSet`
+
+```java
+
+try{
+	    Statement stmt = ConexaoSingleton.getInstance().createStatement();
+	    ResultSet rs;
+	    ArrayList<Funcionario> funcionarios = new ArrayList<>();
+
+	    rs = stmt.executeQuery("SELECT * FROM Funcionario");
+	    while ( rs.next() ) {
+	        	Funcionario funcionario = new Funcionario();
+	        	funcionario.setIdFuncionario(rs.getInt("idFuncionario"));
+	        	funcionario.setNome(rs.getString("nome"));
+	        	funcionario.setEndereco(rs.getString("endereco"));
+	        	funcionario.setTelefone(rs.getString("telefone"));
+	        	funcionarios.add(funcionario);
+	    }
+	    return (Funcionario[]) funcionarios.toArray();
+} catch (Exception e) {
+	   System.err.println("Got an exception! ");
+	   System.err.println(e.getMessage());
+	   return null;
+}
+
+```
+
+---
+task: JDBC
+## 5. Fechar a conexão
+
+```java
+conection.close();
+```
+
+---
+# Referências
+
+[http://docs.oracle.com/javase/tutorial/essential/io/bytestreams.html](http://docs.oracle.com/javase/tutorial/essential/io/bytestreams.html)
+
+---
+class: bg-pic
+background-image: url(http://i.giphy.com/upg0i1m4DLe5q.gif)
+
+
+    </textarea>
+    <script src="../assets/js/remark.min.js" type="text/javascript">
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+     <script>
+        var slideshow = remark.create({
+            highlightStyle: 'monokai',
+            highlightLanguage: 'remark',
+            highlightLines: true
+        });
+    </script>
+</body>
+
+</html>

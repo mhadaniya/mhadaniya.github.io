@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>COMP2032 - Redes de Computadores | Camada Física </title>
+    <meta charset="utf-8">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+        @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic);
+        body {
+            font-family: 'Open Sans';
+            font-size: 24px;
+        }
+
+        p, ul, li {
+            font-size: 24px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Yanone Kaffeesatz';
+            font-weight: normal;
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 100%;
+            max-height: 490px;
+        }
+
+        th {
+            background-color: black;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f2f2f2
+        }
+
+        .imgteste {
+            /* Set rules to fill background */
+            min-height: 100%;
+            min-width: 1024px;
+            /* Set up proportionate scaling */
+            width: 100%;
+            height: auto;
+            /* Set up positioning */
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            /* Preserve aspet ratio */
+            min-width: 100%;
+            min-height: 100%;
+        }
+
+        .inverse {
+            background: #272822;
+            color: #777872;
+            text-shadow: 0 0 20px #333;
+        }
+
+        .inverse h1,
+        .inverse h2 {
+            color: #f3f3f3;
+            line-height: 0.8em;
+        }
+
+        .remark-code,
+        .remark-inline-code {
+            font-family: 'Ubuntu Mono';
+        }
+
+        .right {
+            float: right;
+            margin-left: 1em;
+        }
+
+        .task {
+            float: right;
+            font-size: 0.9em;
+            padding-top: 0.6em;
+        }
+
+        .task a {
+            color: #080;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea id="source">
+
+class: center, middle, inverse
+
+# COMP2032 - Redes de Computadores
+
+---
+class: center, middle, inverse
+
+# Camada Física
+
+---
+# Agenda
+
+1. ## Base teórica
+  * ###  Processo de Transmissão
+2. ## Meios de transmissão
+
+---
+name: default
+layout: true
+task: &nbsp;
+
+.task[{{task}}]
+
+---
+# Base teórica
+
+ - ## É a camada mais baixa da hierarquia no modelo de protocolo que estudaremos;
+ - ## Ela define interfaces elétricas, de sincronização e outras, pelas quais os bits são enviados como sinais pelos canais;
+ - ## É o alicerce;
+
+---
+# Base teórica
+
+## Diferentes tipos de canais físicos determinam:
+* # Throughput
+* # Latência
+* # Taxa de erros
+* # etc...
+
+---
+task: Base teórica
+
+# Processo de Transmissão
+
+ * O processo de transmissão envolve o tratamento de **dados** e **sinais**.
+ * Um dado é uma informação armazenada no dispositivo de origem que se deseja transmitir para o dispositivo de destino.
+ * Para ser transmitido, o dado precisa ser **codificado** em um sinal que percorrerá o canal de comunicação até chegar ao destino, onde será decodificado.
+
+ ![](assets/img/sl02/cmd-fisica-01.png)
+
+
+---
+task: Base teórica
+
+# Processo de Transmissão
+
+* **Dados** e **sinais** podem ser classificados como **analógicos** ou **digitais**.
+* O termo **analógico** está associado à ideia de valores que variam **continuamente** no tempo dentro de um conjunto infinito de valores.
+* O termo **digital** está associado à ideia de valores que variam de forma **discreta** em função do tempo dentro de um conjunto finito de valores.
+
+---
+task: Base teórica
+
+ # Processo de Transmissão
+
+ ![](assets/img/sl02/cmd-fisica-02.png)
+
+
+---
+task: Base teórica
+
+  # Processo de Transmissão
+
+  * Computadores são considerados digitais porque representam dados e sinais apenas com dois valores: `0` e `1`.
+  * Em redes de computadores, os dados estão sempre no formato digital, porém esses dados, para serem transmitidos, devem ser codificados em sinais analógicos ou digitais, dependendo do meio de transmissão.
+
+
+---
+task: Base teórica
+
+# Processo de Transmissão
+
+  ![](assets/img/sl02/cmd-fisica-22.png)
+
+---
+task: Base teórica
+
+# Processo de Transmissão
+
+  * A camada física tem como principal função a **transmissão efetiva dos dados**, representados por uma sequência de bits que formam o **PDU (_Protocol Data Unit_)** da camada física **(PDU-F)**.
+  * A sequência de bits deve ser codificada em sinais na origem e transmitida pelo canal de comunicação. Os sinais recebidos no destino são decodificados, formando novamente a sequência de bits transmitida.
+
+  ![](assets/img/sl02/cmd-fisica-03.png)
+
+
+---
+task: Base teórica
+
+# Característica do sinal
+
+  - Uma onda senoidal de um sinal continuo é usada para transportar informação em comunicação de dados.
+  - Um sinal é **periódico** quando suas características se repetem em função do tempo.
+  - Ela é caracterizada por três parâmetros:
+    * # **Amplitude**
+    * # **Frequência**
+    * # **Fase**
+
+---
+task: Base teórica
+
+# Característica do sinal
+  - A **amplitude** de um sinal está relacionada à sua potência, e geralmente é medida em **volts**. A grande diferença entre os sinais analógico e digital é como a amplitude varia em função do tempo, é o valor máximo ou pico do sinal no tempo;
+  - A **frequência** (f) de um sinal é o número de vezes que o ciclo se repete no intervalo de 1 segundo. A frequência é medida em ciclos por segundo ou em **Hertz** (Hz).
+  - A **fase** é definida como a posição relativa no tempo que o sinal é gerado.
+
+---
+task: Base teórica
+
+# Característica do sinal
+
+![](assets/img/sl02/cmd-fisica-05.png)
+
+
+---
+task: Base teórica
+
+# Característica do sinal
+
+![](assets/img/sl02/cmd-fisica-04.png)
+
+
+---
+task: Base teórica
+
+# Característica do sinal
+
+![](assets/img/sl02/cmd-fisica-23.png)
+
+---
+task: Base teórica
+
+# Característica do sinal
+
+![](assets/img/sl02/cmd-fisica-24.png)
+
+
+---
+task: Base teórica
+
+# Problemas na transmissão
+
+O projeto de um sistema de comunicação deve levar em consideração os diversos tipos de problemas na transmissão, tentando evitá-los ou minimizá-los, para que se possa aumentar a confiabilidade do sistema.
+
+ - ## Ruído
+ - ## Atenuação
+
+---
+task: Base teórica
+
+# Problemas na transmissão
+
+![](assets/img/sl02/cmd-fisica-06.png)
+
+---
+task: Base teórica
+
+# Problemas na transmissão
+
+- O problema do **ruído** é consequência de interferências eletromagnéticas indesejadas que provocam distorções nos sinais transmitidos e alteram o seu significado.
+- O nível de ruído em uma transmissão é medido como uma relação entre a potência do sinal e a potência do ruído, chamada de **relação sinal-ruído (SNR - _Signal-to-noise ratio_)**. Quanto maior a SNR, melhor a qualidade do sinal.
+
+---
+task: Base teórica
+
+# Problemas na transmissão
+
+- O problema da **atenuação** é consequência da perda de potência do sinal transmitido, na medida em que o sinal percorre o canal de comunicação até atingir o destino.
+- Nesse caso, o meio de transmissão funciona como um filtro, **reduzindo a amplitude do sinal** e impedindo que o receptor decodifique corretamente o sinal recebido.
+
+---
+task: Base teórica
+
+# Problemas na transmissão
+
+- O nível de atenuação **depende** do meio de transmissão utilizado. O efeito da atenuação limita diretamente o comprimento máximo de cabos e a distância máxima entre antenas.
+
+![](assets/img/sl02/cmd-fisica-07.png)
+
+
+---
+task: Base teórica
+
+# Problemas na transmissão
+
+A atenuação em sinais analógicos apresenta dois problemas adicionais que devem ser considerados:
+- Primeiro: quanto mais altas as frequências, maiores os efeitos da atenuação;
+- Segundo: juntamente com a recuperação do sinal, ocorre a amplificação do ruído, o que pode comprometer a decodificação do sinal.
+
+Problemas de atenuação podem ser resolvidos utilizando-se equipamentos especiais que recuperam a potência original do sinal. No caso de sinais analógicos, utilizam-se amplificadores para recuperar o sinal, enquanto em sinais digitais utilizam-se regeneradores ou repetidores.
+
+---
+task: Base teórica
+
+# Problemas na transmissão
+
+- **Distorções:** são modificações deterministas e sistemáticas causadas pela imperfeição do canal, podem ser compensadas através de circuitos de equalização. A distorções são características e sistemáticas, inerentes a cada canal de transmissão. Elas podem ser determinadas e previstas.
+- **Ruídos:** Eco, Ruído impulsivo (devido aos fortes efeitos de indução eletromagnética), _cross-talk_ (é a interferência indesejada que um canal de transmissão causa em outro).
+
+---
+task: Base teórica
+
+# Largura de banda e Capacidade de transmissão
+
+O espectro de frequências é especialmente importante em **transmissões sem fio**, pois quanto mais baixa a frequência, mais fácil para o sinal ultrapassar barreiras físicas, como paredes e montanhas.
+
+Além disso, são menos susceptíveis ao problema de atenuação do sinal. Porém, possuem menor alcance e menor direcionalidade.
+
+Por outro lado, as **frequências mais altas precisam de antenas menores e o sinal possui maior alcance e direcionalidade**. Entretanto, a imunidade à obstáculos é
+menor.
+
+---
+task: Base teórica
+
+# Largura de banda e Capacidade de transmissão
+
+![](assets/img/sl02/cmd-fisica-08.png)
+
+---
+task: Base teórica
+
+# Largura de banda e Capacidade de transmissão
+
+![](assets/img/sl02/cmd-fisica-09.png)
+
+---
+task: Base teórica
+
+# Largura de banda e Capacidade de transmissão
+
+![](http://files.logicamaxtec.webnode.com.br/200000271-8edcd8f282/ondas5.gif)
+
+---
+task: Base teórica
+
+# Largura de banda e Capacidade de transmissão
+
+![](assets/img/sl02/cmd-fisica-10.png)
+
+---
+task: Base teórica
+
+# Largura de banda e Capacidade de transmissão
+
+![](assets/img/sl02/cmd-fisica-25.png)
+
+---
+task: Base teórica
+
+# Largura de banda e Capacidade de transmissão
+
+## Largura de banda:
+* ### **Computação**: é a taxa de dados máxima de um canal;
+* ### **Engenharia**: quantidade medida em Hz.
+
+---
+task: Base teórica
+
+# Largura de banda e Capacidade de transmissão
+
+**Banda Passante** – É a faixa de frequência que permanece praticamente preservada pelo meio. Trata-se de uma característica do meio de
+transmissão.
+
+![](assets/img/sl02/cmd-fisica-11.png)
+
+---
+task: Base teórica
+
+# Fourier
+
+- ### Jean Baptiste Fourier; .right[![](https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Joseph_Fourier.jpg/200px-Joseph_Fourier.jpg)]
+- ### Provou que qualquer função periódica razoavelmente estável pode ser construída como a soma de **senos** e **cossenos**.
+
+
+\begin{equation}
+  f(x) = \frac{1}{2}c + \sum_{n=0}^{\infty} a_n \sin{(\frac{\pi xn}{T})}
+  \label{eq:sample}
+\end{equation}
+
+$$ + \sum_{n=0}^{\infty} b_n \cos{(\frac{\pi x n}{T})} $$
+
+
+---
+task: Base teórica
+
+# Fourier
+
+## Período
+
+![](assets/img/sl02/cmd-fisica-12.png)
+
+---
+task: Base teórica
+
+# Fourier
+
+## Período
+
+![](assets/img/sl02/cmd-fisica-13.png)
+
+---
+task: Base teórica
+
+# Fourier
+
+Segundo Fourier, qualquer função periódica, por mais complicada que seja, pode ser representada como a soma de várias funções seno e cosseno com amplitudes, fases e períodos escolhidos convenientemente.
+
+
+![](assets/img/sl02/cmd-fisica-14.png)
+
+---
+task: Base teórica
+
+# Fourier
+
+![](assets/img/sl02/cmd-fisica-15.png)
+
+$$ f(x) = 2\sin(x) + 7\sin(2x) + 5\cos(3x) + 4\cos(5x) $$
+
+---
+task: Base teórica
+
+# Fourier
+
+Qualquer função $ f(x) $ pode, segundo Fourier, ser escrita na forma da soma de uma série de funções seno e cosseno da seguinte forma geral:
+
+\begin{equation}
+  f(x) = a_0 + a_1 \sin{x} + a_2 \sin{x} + a_3 \sin{x} +
+         b_1 \sin{x} + b_2 \sin{x} + b_3 \sin{x} +
+\end{equation}
+
+\begin{equation}
+  f(x) = \frac{1}{2}c + \sum_{n=0}^{\infty} a_n \sin{(\frac{\pi xn}{T})}
+\end{equation}
+
+---
+task: Base teórica
+
+# Fourier
+
+[![Me Salva! COM03 - Séries de Fourier](http://img.youtube.com/vi/3RJC8C3y0v0/0.jpg)](https://www.youtube.com/watch?v=3RJC8C3y0v0)
+
+---
+task: Base teórica
+
+# Fourier
+
+Part 1 [![Fourier Series Part 1](http://img.youtube.com/vi/x04dnqg-iPw/1.jpg)](https://www.youtube.com/watch?v=x04dnqg-iPw)
+
+Part 2 [![Fourier Series Part 2](http://img.youtube.com/vi/x04dnqg-iPw/1.jpg)](https://www.youtube.com/watch?v=B9l1fZLLW1E)
+
+---
+task: Base teórica
+
+# Fourier
+
+http://falstad.com/fourier/
+
+---
+task: Base teórica
+
+# Fourier
+
+![](assets/img/sl02/cmd-fisica-16.png)
+
+---
+task: Base teórica
+
+# Fourier
+
+![](assets/img/sl02/cmd-fisica-17.png)
+
+---
+task: Base teórica
+
+# Fourier
+
+![](assets/img/sl02/cmd-fisica-18.png)
+
+---
+task: Base teórica
+
+# Fourier
+
+![](assets/img/sl02/cmd-fisica-19.png)
+
+---
+task: Base teórica
+
+# Fourier
+
+![](assets/img/sl02/cmd-fisica-20.png)
+
+---
+task: Base teórica
+
+# Fourier
+
+Se as perdas de energia fossem iguais em todas as componentes de frequência o resultado seria o mesmo sinal porém com uma menor amplitude.
+
+![](assets/img/sl02/cmd-fisica-21.png)
+
+---
+task: Base teórica
+
+# Taxa máxima de dados de um canal
+
+- Em geral, para um fio, as amplitudes são transmitidas sem redução, de 0 até alguma frequência $ f_c $
+- A faixa de frequências transmitidas sem serem fortemente atenuadas denomina-se largura de banda
+- A largura de banda é uma propriedade física do meio de transmissão, que depende, por exemplo, da construção da espessura e do comprimento do meio (fio ou fibra)
+- É medida pela número máximo de ciclos por segundo que o meio aceita (Hertz -Hz)
+
+---
+task: Base teórica
+
+# Taxa máxima de dados de um canal
+
+Filtros geralmente limitam ainda mais o volume de largura da banda. Por exemplo:
+- 802.11 - 20 MHz
+- canais de TV analógicos - 6 MHz
+
+Os filtros permitem que mais sinais compartilhem determinada região do espectro, melhorando a eficiência geral do sistema.
+
+---
+task: Base teórica
+
+# Taxa máxima de dados de um canal
+
+- Em 1924, Henry Nyquist, percebeu que até um canal perfeito tem uma taxa de capacidade finita.
+
+.right[![Henry Nyquist](https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Harry_Nyquist.jpg/200px-Harry_Nyquist.jpg)]
+
+$$
+  C = 2 B log_2 V bits/s
+$$
+
+- $C$ : capacidade máxima do canal
+- $B$ : largura de banda medida em Hertz
+- $V$ : níveis discretos, número de níveis do sinal.
+
+---
+task: Base teórica
+
+# Taxa máxima de dados de um canal
+
+- Em 1948, Claude Shannon, estendeu o trabalho de Nyquist, provando matematicamente que um canal tem capacidade limitada na presença de ruído
+
+.right[![Claude Shannon](http://history-computer.com/ModernComputer/thinkers/images/shannon.jpg)]
+
+$$
+  C = B log_2 (1 + S/N)
+$$
+
+- $C$ : capacidade máxima do canal
+- $B$ : largura de banda medida em Hertz
+- $S/N$ : _Signal-to-noise ratio_ (SNR), nível de ruído em uma transmissão é medido como uma relação entre a potência do sinal e a potência do ruído
+
+---
+task: Base teórica
+
+# Taxa máxima de dados de um canal
+
+- ### SNR (_Signal-to-Noise Ratio_)
+- O volume de ruído térmico presente é medido pela relação entre a potência do sinal e a do ruído
+- Em geral, não se faz referência a relação propriamente dita, mas a quantidade, medida em **dB**
+
+---
+task: Base teórica
+
+# Relembrando dB
+
+- dB é uma unidade logarítmica muito utilizada em telecomunicações, representando relações de potências, tensões ou outras relações
+- Por definição, uma quantidade Q em dB é igual a 10 vezes o logaritmo decimal da relação de duas potências, ou seja
+
+$$
+Q(dB) = 10log_{10}(P1/P2)
+$$
+
+---
+task: Base teórica
+
+# Relembrando dB
+
+![](https://matematicadovestibular.files.wordpress.com/2011/11/sem-tc3adtulo3.png)
+
+$Q(dB) = 10log_{10}(SNR)$
+
+$30 = 10log_{10}(SNR)$
+
+$30/10 = log_{10} SNR$
+
+$3 = log_{10} SNR \implies SNR = 10^{3} \implies SNR = 1000$
+
+---
+task: Base teórica
+
+# Relembrando dB
+
+| Q(dB) |  P1/P2 |
+|:-----:|:------:|
+|   30  |  1000  |
+|   20  |   100  |
+|   10  |   10   |
+|   6   |    4   |
+|   3   |    2   |
+|   0   |    1   |
+|  -3   |   0,5  |
+|   -6  |  -0,25 |
+|  -10  |  -0,1  |
+|  -20  |  -0,01 |
+|  -30  | -0,001 |
+
+
+---
+task: Base teórica
+
+# Taxa máxima de dados de um canal
+
+Qual a capacidade máxima de transmissão de um canal com largura de banda de 4KHz, utilizando uma codificação de 2 bits?
+
+--
+
+$ C = 2 B log_2 V bits/s $
+
+--
+
+$ C = 2 4000 log_2 (2)$
+
+--
+
+$ C =  2 4000 log_2 (1+1000) = 4000 log_2 (1001) = 4000 \times 9.967 \cong 39868 bps $
+
+
+---
+task: Base teórica
+
+# Taxa máxima de dados de um canal
+
+Qual a capacidade máxima de transmissão de um canal com largura de banda de 4KHz e uma relação sinal ruído de 30dB?
+
+--
+
+$ 30 dB = 10^3 = 1000 $
+
+--
+
+$ C = 4000 log_2 (1+SNR)$
+
+--
+
+$ C =  4000 log_2 (1+1000) = 4000 log_2 (1001) = 4000 \times 9.967 \cong 39868 bps $
+
+
+---
+class: center, middle, inverse
+
+# Meios de transmissão
+
+---
+# Referências
+
+[http://docs.oracle.com/javase/tutorial/essential/io/bytestreams.html](http://docs.oracle.com/javase/tutorial/essential/io/bytestreams.html)
+
+---
+
+.bg[ ![](http://i.giphy.com/upg0i1m4DLe5q.gif)]
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+     <script>
+        var slideshow = remark.create({
+            highlightStyle: 'monokai',
+            highlightLanguage: 'remark',
+            highlightLines: true
+        });
+
+        MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            processEscapes: true
+          }
+        });
+    </script>
+</body>
+
+</html>

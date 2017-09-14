@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>COMP2032 Redes de Computadores | Enlace</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/mystyle.css"/>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle, inverse
+
+# COMP2032
+# Redes de Computadores
+
+---
+.alert[.alert-danger[
+.alert-heading[
+# <i class="fa fa-exclamation" aria-hidden="true"></i> Disclaimer]
+.alert-light[
+Esta apresentação é um compilado de diversos materiais e inspirações de outros tantos que encontrei nestes anos lecionando a disciplina. **.high[Não é um material que de forma alguma deve ser utilizado como única fonte de estudos]**.
+
+A probabilidade de haver erros no texto é alto, pois o mesmo só é revisado por mim, que já possuo vicios do próprio texto, portanto, me desculpe e fico no aguardo de um alô com os pontos para correção.
+]
+]]
+
+---
+class: center, middle, inverse
+
+# Camada de enlace
+
+---
+## Objetivos
+
+Entender os conceitos da camada de enlace:
+- Detecção e correção de erros
+- Controle de acesso ao meio (enlace)
+- Enquadramento (Delimitação de quadros)
+
+---
+class: center, middle
+
+## Conceitos iniciais
+
+---
+
+![](assets/img/sl03/enlace.png)
+
+---
+
+![](assets/img/sl03/enlace1.png)
+
+---
+
+![](assets/img/sl03/enlace2.png)
+
+---
+
+**Enlace:** canal de comunicação que conecta nós adjacentes através de um caminho.
+
+- Enlaces com fio
+- Enlaces sem fio
+
+Na camada de enlace, o **PDU (_Protocol Data Unit_)** tratado chamamos de **quadros (frames)**, que encapsula datagramas.
+
+Permitir a comunicação eficiente e confiável entre dois computadores adjacentes em nível da camada de enlace de dados (adjacentes no sentido de estarem fisicamente conectadas)
+
+---
+
+![](assets/img/sl03/maps01.png)
+
+---
+
+![](assets/img/sl03/maps02.png)
+
+---
+
+![](assets/img/sl03/maps03.png)
+
+---
+
+![](assets/img/sl03/maps03.png)
+
+- **Turista**: datagrama
+- **Segmento de transporte**: enlace de comunicação
+- **Modo de transporte**: protocolo da camada de enlace
+
+---
+class: middle, center, inverse
+
+# Serviços
+
+---
+## Enquadramento
+
+- Encapsula datagramas em quadros acrescentando cabeçalhos e trailer
+- Implementa acesso ao canal se o meio é compartilhado
+- **Endereços físicos** usados nos cabeçalhos dos quadros para identificar a fonte e o destino dos quadros
+- Diferente do endereço IP
+
+--
+
+## Entrega confiável entre dois equipamentos fisicamente conectados
+
+---
+
+## Controle de fluxo
+
+O controle de fluxo assegura que o transmissor não sobrecarregue o receptor com dados, evitando o estouro da capacidade de armazenamento do buffer. **Os dados são fragmentados em frames pequenos pois:**
+- Tamanho do buffer é limitado
+- Erros são detectados mais cedo
+- Em caso de erro, pequena quantidade de dados é retransmitida
+- Evita-se que um transmissor ocupe o canal por muito tempo
+
+---
+
+## Detecção de erros
+
+Erros causados pela atenuação do sinal e por ruídos, o receptor detecta a presença de erros e avisa o transmissor para reenviar o quadro perdido.
+
+--
+
+## Correção de erros
+
+O receptor identifica e corrige o bit com erro(s) sem recorrer à retransmissão
+
+--
+
+## Half-duplex e full-duplex
+
+Com half-duplex, os nós em ambas as extremidades do enlace podem transmitir, mas não ao mesmo tempo
+
+---
+class: middle, inverse, center
+
+# Pacotes e Quadros
+
+---
+
+# Pacotes e Quadros
+
+A camada de enlace de dados utiliza os serviços da camada física para enviar e receber bits pelo canal de comunicação
+
+Possui diversas funções, dentre as quais:
+- Fornecer uma interface de serviço bem definida à camada de rede
+- Lidar com erros de transmissão
+- Regular o fluxo de dados de tal forma que receptores lentos não sejam atropelados por transmissores rápidos
+
+---
+
+# Pacotes e Quadros
+
+Para alcançar esses objetivos, a camada de enlace recebe os pacotes da camada de rede e os encapsula em quadros para transmissão
+
+Cada quadro contém um cabeçalho (header) de quadro, um campo de carga útil que conterá o pacote, e um final (trailer) de quadro como mostra a figura a seguir
+
+---
+
+# Pacotes e Quadros
+
+![](assets/img/sl03/quadros.png)
+
+---
+class: inverse, middle, center
+
+# Serviços oferecido à camada de redes
+
+---
+
+## Serviços oferecido à camada de redes
+
+![](assets/img/sl03/serv_rede.png)
+
+---
+
+## Serviços oferecido à camada de redes
+
+O principal serviço é transferir dados da camada de rede da máquina de origem para a camada de rede da máquina de destino
+
+Na camada de rede da máquina de origem há uma entidade, chamada processo , que entrega alguns bits à camada de enlace de dados para transmissão ao destino
+
+A tarefa da camada de enlace de dados é transmitir bits à camada de rede dessa máquina de destino, conforme mostra a parte (a) da figura. A transmissão propriamente dita é mostrada na parte (b)
+
+---
+
+## Serviços oferecido à camada de redes
+
+Contudo, é mais fácil pensamos em termos de dois processos na camada de enlace de dados, que se comunicam por intermédio de um protocolo de enlace de dados (por isso utilizaremos como referência sempre a parte (a) da figura)
+
+A camada de enlace de dados pode ser projetada de modo a oferecer diversos serviços.
+
+Os serviços reais oferecidos podem variar de um protocolo para outro.
+
+---
+## Serviços oferecido à camada de redes
+
+Três possibilidades razoáveis que consideraremos são:
+- Serviço não orientado a conexões sem confirmação
+- Serviço não orientado a conexões com confirmação
+- Serviço orientado a conexões com confirmação.
+
+---
+
+### Serviço não orientado a conexões sem confirmação
+
+- Consiste em fazer a máquina de origem enviar quadros independentes à máquina de destino, sem que essa confirme o recebimento desses quadros
+- A Ethernet é um bom exemplo de uma camada de enlace de dados que oferece esta classe de serviço
+- Nenhuma conexão lógica é estabelecida antes ou liberada depois do processo. Se um quadro for perdido em decorrência de ruídos na linha, não haverá nenhuma tentativa de detectar a perda ou de recuperá-lo na camada de enlace de dados
+
+
+---
+### Serviço não orientado a conexões sem confirmação
+
+- Esta classe de serviço é apropriada quando a **taxa de erros é muito baixa** e a recuperação fica a cargo das camadas mais altas
+- Ela também é apropriada para o tráfego em tempo real, no qual, a exemplo da voz, os dados atrasados causam mais problemas que os dados recebidos com falhas
+
+
+---
+### Serviço não orientado a conexões com confirmação
+
+- Quando este serviço é oferecido, ainda não há conexões lógicas sendo usadas, mas cada quadro enviado é confirmado individualmente
+- Caso não tenha chegado dentro de um intervalo específico o quadro poderá ser enviado outra vez
+- Esse serviço é útil em canais não confiáveis, como os sistemas sem fio. O padrão 802.11 (WiFi) é um bom exemplo desta classe de serviço
+
+---
+### Serviço não orientado a conexões com confirmação
+
+- Oferecer recursos de confirmação a nível de camada de enlace é uma questão de otimização, nunca uma exigência
+- A camada de rede sempre pode enviar um pacote e esperar que ele seja confirmado por seu par na máquina remota. Se a confirmação não chegar durante o intervalo do timer, o transmissor poderá enviar a mensagem inteira mais umas vez
+
+---
+### Serviço não orientado a conexões com confirmação
+
+- O problema desta estratégia é que ela pode ser ineficaz, pois os enlaces normalmente tem um comprimento máximo para o quadro (imposto por hardware) e atrasos de propagação conhecidos. Contudo, a camada de redes não conhece esses parâmetros, podendo enviar um pacote grande subdividido em por exemplo, dez quadros, dos quais dois são perdidos em média, fazendo com que o tempo necessário para efetivar a transmissão do pacote com sucesso seja muito longo
+- Ao invés disso, se quadros individuais forem confirmados e retransmitidos, então os erros podem ser corrigidos rapidamente
+
+---
+### Serviço orientado a conexões
+
+- Com ele, máquinas de origem e de destino estabelecem uma conexão antes de qualquer dado ser transferido. Cada quadro enviado pela conexão é numerado, e a camada de enlace de dados garante de fato que cada quadro será recebido
+- Além disso, esse serviço garante que todos os quadros serão recebidos de uma única vez e na ordem correta. Assim, os serviços orientados a conexões fornecem aos processos da camada de rede o equivalente a um fluxo de bits confiável
+- Isso é apropriado para enlaces longos, não confiáveis, como um canal de satélite ou um circuito telefônico interurbano
+
+---
+### Serviço orientado a conexões
+
+Quando o serviço orientado a conexões é usado, as conexões passam por 3 fases distintas:
+- Estabelecimento da comunicação, inicializando variáveis e contadores necessários para controlar os quadros
+- Um ou mais quadros são transmitidos
+- A conexão é desfeita, liberando-se as variáveis, buffers e outros recursos utilizados
+
+
+---
+class: middle, inverse, center
+
+# Enquadramento
+
+---
+## Enquadramento
+
+- ## Contagem de caracteres
+- ## Bytes de flags
+- ## Flags iniciais e finais
+- ## Violação de codificação da camada física
+
+---
+## Contagem de caracteres
+
+![](assets/img/sl03/contagem.png)
+
+---
+## Contagem de caracteres
+
+O problema com esse algoritmo é que a contagem pode ser adulterada por um erro de transmissão, conforme visto na parte (b) da figura anterior, fazendo com que seja perdido a capacidade de localizar o início do quadro seguinte
+
+Mesmo que o checksum esteja incorreto, de modo que o destino identifique que o quadro está defeituoso, ele ainda não terá informações suficientes para saber onde começa o quadro seguinte
+
+Enviar um quadro de volta à origem também não ajuda, pois o destino não sabe quantos caracteres deverão ser ignorados para chegar ao início da retransmissão. Por essa razão, o método de contagem de caracteres quase não é mais usado
+
+---
+## Bytes de flags
+
+![](assets/img/sl03/byte_flag.png)
+
+---
+## Bytes de flags
+
+Este método contorna o problema de ressincronização após um erro, <b>fazendo cada quadro começar e terminar com bytes especiais</b>. Normalmente o mesmo byte, chamado de <b>byte flag</b>, é usado como delimitador de início e fim, conforme visto na parte (a) da figura
+
+Dois bytes de flag consecutivos indicam o fim de um quadro e o início de outro
+
+Assim, se o receptor perder a sincronização ele poderá simplesmente procurar 2 bytes de flag para encontrar o final do quadro atual e o início do seguinte
+
+---
+## Bytes de flags
+
+Contudo ainda existe um problema, é bem possível que o byte de flag ocorra no meio dos dados transmitidos, interferindo no enquadramento
+
+Nesta situação, uma solução é fazer com que o transmissor inclua um caractere de escape especial (ESC) imediatamente antes de cada byte de flag “acidental”
+
+A camada de enlace do receptor remove os bytes de escape antes de os entregar à camada de rede. Esta técnica pe chamada de inserção de bytes <b>(byte stuffing)</b>
+
+---
+## Preenchimento com bits
+
+![](assets/img/sl03/bits_preench.png)
+
+---
+## Preenchimento com bits
+
+O enquadramento também pode ser realizado a nível de bits, de modo que os quadros possam conter um número qualquer de bits, compostos por unidades de qualquer tamanho
+
+Ele foi desenvolvido para o então muito popular protocolo de controle de enlace de dados de alto nível, ou HDLC (High-level Data Link Control).
+
+Cada quadro começa e termina com um padrão de bits especial, 01111110, ou 0x7E em hexadecimal (na verdade um byte de flag...)
+
+---
+## Preenchimento com bits
+
+Sempre que encontra 5 valores 1 consecutivos nos dados, a camada de enlace no transmissor automaticamente insere um bit 0 no fluxo de bits que está sendo enviado. Esta inserção de bits é semelhante a inserção de bytes
+
+Escape é inserido no fluxo de caracteres enviado antes de ocorrer um byte de flag nos dados. Isso também ajuda a manter uma densidade mínima de transições, o que ajuda a camada física a manter a sincronização.
+
+O USB utiliza a inserção de bits por esse motivo
+
+A inserção de bits e de bytes é completamente transparente para a camada de rede de ambos os computadores.
+
+---
+## Byte de flag e Preenchimento com bits
+
+Com a inserção de bits e de bytes, um efeito colateral é que agora o comprimento de um quadro depende do conteúdo de dados que ele carregar, por exemplo: se não houver bytes de flag no meio dos dados, 100 bytes podem ser transportados em um quadro de aproximadamente 100 bytes
+
+Porém se os dados consistirem unicamente de bytes de flag, cada um terá um escape associado e o quadro terá aproximadamente 200 bytes de comprimento
+
+Já com a inserção de bits, o aumento seria de aproximadamente 12,5%, pois 1 bit é inserido a cada byte
+
+---
+class: middle, inverse, center
+
+# Controle de erros
+
+---
+## Controle de erros
+
+A forma mais comum de garantir uma entrega confiável é dar ao transmissor algum tipo de feedback sobre o que está acontecendo no outro extremo da linha de comunicação (receptor)
+
+Geralmente o protocolo de comunicação solicita que o receptor retorne quadros de controle especiais com confirmações positivas ou negativas sobre os quadros recebidos (ou não)
+
+Se receber uma confirmação positiva sobre um quadro, o transmissor saberá que o quadro chegou em segurança ao destino.
+
+Por outro lado, uma confirmação negativa significa que algo saiu errado e o quadro deve ser retransmitido.
+
+---
+## Controle de erros
+
+### Um quadro desaparecer totalmente (por exemplo uma rajada de ruídos), fazendo com que o receptor não reaja de maneira alguma (sem feedback)?
+
+--
+### Quadro de confirmação se perde e o emissor não saberá como prosseguir?
+
+---
+## Controle de erros
+
+Para evitar este tipo de problema, são introduzido <b>timers</b> na camada de enlace de dados
+
+Ao se enviar um quadro, o emissor inicializa um timer suficientemente longo para que o quadro chegue ao destino e dê o seu feedback. Caso isso não ocorra, o timer é desativado e o quadro enviado novamente
+
+--
+
+### O mesmo quadro pode ser aceito pelo receptor duas ou mais vezes?
+
+--
+
+Para evitar que isso aconteça, geralmente é preciso atribuir números de sequência aos quadros transmitidos, de modo que o receptor possa distinguir as retransmissões dos originais.
+
+---
+class: inverse, middle, center
+
+# Código de Detecção de Erros
+
+---
+## Código de Detecção de Erros
+
+### Redundância
+
+Como um canal possui sempre uma capacidade limitada de transmissão de informação, a quantidade total \\( (n) \\) bits por segundo é limitada
+
+Existe um _tradeoff_ natural entre a quantidade de informação \\( (m) \\) e de bits de verificação \\( (r) \\) , onde \\( n = m + r \\). Assim, a quantidade total de bits \\( n \\) é a soma entre a informação e os bits de verificação.
+
+A redundância de um código \\( (r) \\), é a proporção de informação redundante, necessária para a detecção e/ou correção de erros: \\( r = n / m \\)
+
+---
+## Código de Detecção de Erros
+
+### Redundância
+
+Para \\( m = 4 \\), temos a seguinte tabela para a relação de redundância.
+
+<table class="table table-striped table-hover">
+  <thead class="thead-inverse">
+    <th>m</th>
+    <th>r</th>
+    <th>n</th>
+    <th>n/m</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>1,25</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>2</td>
+      <td>6</td>
+      <td>1,5</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>3</td>
+      <td>7</td>
+      <td>1,75</td>
+    </tr>
+  </tbody>
+</table>
+
+
+---
+## Código de Detecção de Erros
+
+- ### Paridade
+- ### Checksums
+- ### Verificação de redundância cíclica (CRCs)
+
+---
+## Código de Detecção de Erros: Bit de Paridade
+
+Um único bit de paridade é acrescentado aos dados
+
+O bit de paridade é escolhido de modo que o número de bits 1 na palavra de código seja par ou ímpar (definido à priori)
+
+Por exemplo quando a “palavra” `1011010` é enviada utilizando a <b>paridade par</b>, um bit 0 é acrescentado ao final para torná-lo `10110100`
+
+Com a paridade ímpar, `1011010` torna-se `10110101`
+
+---
+## Código de Detecção de Erros: Bit de Paridade
+
+Em um código com um único bit de paridade, qualquer erro de um único bit produz uma palavra com a paridade errada. Isso significa que esse código pode detectar erros de um único bit
+
+Podemos agora calcular um bit de paridade por linha (k), deste modo serão detectados de forma confiável k erros de bit (desde que haja somente um erro por linha)
+
+---
+## Código de Detecção de Erros: Bit de Paridade
+
+### E erros devido à rajada de interferência?
+
+--
+
+Podemos calcular os bits de paridade em uma ordem diferente daquela de transmissão, ou seja, calcular os bits de paridade por colunas (n)
+
+Esta técnica de codificação é chamada de entrelaçamento, que consiste de uma técnica geral para converter um código que detecta (ou corrige) erros isolados, em um código que detecta (ou corrige) erros em rajada
+
+---
+## Código de Detecção de Erros: Bit de Paridade
+
+![](assets/img/sl03/bit_paridade.png)
+
+---
+## Código de Detecção de Erros: Checksum
+
+Consiste na transmissão de todas as palavras juntamente com o resultado da sua soma binária.
+- Inclui o bit de transporte (vai-um/carry bit)
+- Inversão do valor dos bits do checksum
+
+---
+## Código de Detecção de Erros: Cyclic Redundancy Check
+
+- O esquema de checksum utilizado na camada de enlace é o **CRC (_Cyclic Redundancy Check_)** que consiste de um código polinomial de \\( k \\) termos
+- Esquema mais eficiente
+- Emissor/receptor concordam num polinômio gerador \\( G(x) \\), em que quanto maior for o seu grau maior, será a capacidade de detecção de erros
+- Para calcular o CRC de um quadro com \\( k \\) bits, que corresponde ao polinômio \\( M(x) \\), o quadro deve ter mais bits do que o polinômio gerador
+
+---
+## Código de Detecção de Erros: Cyclic Redundancy Check
+
+- Neste polinômio tanto o bit de maior ordem quanto o de menor ordem devem ser iguais a 1
+- Palavra inicial de \\( k \\) bits é representado por um polinômio de X de ordem \\( k-1 \\)</p>
+  * Por exemplo: `110001` tem `6 bits`
+  * representa um polinômio de seis termos com coeficientes `1,1,0,0,0 e 1`
+  * \\( 1x^5 + 1x^4 + 0x^3 + 0x^2 + 0x^1 + 1x^0 \\)
+
+---
+## Código de Detecção de Erros: Cyclic Redundancy Check
+
+O algoritmo para cálculo do CRC é o seguinte:
+- Seja \\( r \\) o grau do polinômio gerador \\( G(x) \\). Acrescente \\( r \\) bits zero à extremidade de baixa ordem do quadro, de modo que ele passe a conter \\( m + r \\) bits e corresponda ao polinômio \\( x^rM(x) \\)
+- Divida a string de bits correspondente a \\( x^rM(x) \\) pela string de bits correspondente a \\( G(x) \\) utilizando a divisão de módulo 2 (XOR)
+- Subtraia o resto (que tem sempre \\( r \\) ou menos bits) da string de bits correspondente a \\( x^rM(x) \\) utilizando a subtração de módulo 2 (XOR). O resultado é o quadro verificado pela soma que deverá ser transmitida.
+- * Lembre-se que uma divisão nada mais é do que subtrações sucessivas
+
+---
+## Código de Detecção de Erros: Cyclic Redundancy Check
+
+![](assets/img/sl03/crc.png)
+
+---
+## Código de Detecção de Erros: Cyclic Redundancy Check
+
+Do lado receptor o cálculo consiste em dividir o quadro + o CRC pelo polinômio gerador
+
+Se o resultado for zero, não houveram erros de transmissão, veja o complemento do exemplo anterior na figura a seguir
+
+---
+## Código de Detecção de Erros: Cyclic Redundancy Check
+
+![](assets/img/sl03/crccheck.png)
+
+---
+class: middle, inverse, center
+
+# Detecção e Correção de Erros
+
+---
+## Detecção e Correção de Erros
+
+### Hamming
+
+O código de Hamming é um código de detecção e correção, isto é, permite não apenas detectar o erro de um bit, mas também a localização do bit errado.
+
+Trabalha com codificação, adicionando bits de controle em determinadas posições.
+
+As posições seguem o padrão: \\( 2^0 2^1 2^2 2^3 2^4 ... 2^n \\)
+
+---
+## Detecção e Correção de Erros: Hamming
+
+### Distância de Hamming
+
+A distância de Hamming é o número de bits diferentes entre duas palavras.
+
+Supondo \\( p1 \\)  = `10010` e \\( p2 \\) = `11101`, aplicando \\( \oplus \\) (xor) temos:
+
+\begin{equation}
+\frac{
+    \\begin{array}[b]{r}
+      10010 \\\\
+      \oplus 11101
+    \\end{array}
+  }{
+     01111
+  }
+\end{equation}
+
+Assim, temos que a \\( d_h(p1,p2) = 4 \\), pois temos 4 bits de diferença entre \\( p1 \\) e \\( p2 \\). Isto significa que modificando 4 bits em \\( p1 \\), conseguimos chegar em \\( p2 \\), e vice-versa.
+
+---
+## Detecção e Correção de Erros: Hamming
+
+### Distância de Hamming
+
+Para calcular a distância de Hamming de um código completo, deve-se calcular a distância entre todos os pares de palavras de código. A menor distância é a distância de Hamming.
+
+Para se detectar \\( d \\) erros simples, é preciso um código com distância \\( d_h = d + 1 \\).
+
+Para se corrigir \\( e \\) erros simples, é preciso um código com distância \\( d_h = 2e + 1 \\).
+
+---
+## Detecção e Correção de Erros: Hamming
+
+### Distância de Hamming
+
+** Exemplo ** Dado o seguinte o conjunto de palavras válidas: `000000, 000111, 111000 e 111111`.
+
+Para se detectar erros simples, precisamos de \\( d_h = d + 1 \implies 3 = d + 1 \implies d = 3 - 1 \implies d = 2 \\). Com isto, conseguimos detectar até 2 erros.
+
+Agora, para correção, Para se corrigir \\( e \\) erros simples, temos que é necessário um código com distância  \\( d_h = 2e + 1 \\). Como a distância é \\( 3 \\), temos  \\( 3 = 2e + 1 \implies 2e = 2 \implies e = 1 \\). Significa que conseguimos corrigir apenas 1 bit.
+
+---
+## Detecção e Correção de Erros: Hamming
+
+### Distância de Hamming
+
+** Exemplo **
+
+Assim, supondo que queremos enviar `000000` e recebemos `100001`, sabemos que há um erro, mas não conseguimos corrigir este erro, pois \\( d_h = 2 \\). Mas se recebermos `100000`, conseguimos detectar o erro e corrigir, pois \\( d_h = 1 \\), indicando que há apenas 1 bit de erro e é possível a correção.
+
+---
+## Detecção e Correção de Erros: Hamming
+
+### Distância de Hamming
+
+Assim, para a codificação de Hamming, ele consegue detectar e corrigir erros de até 1 bit, pois funciona como um bit de paridade.
+
+Seja um código com \\( m \\) bits de dados e \\( r \\) bits de redundância, para cada uma das \\( 2^m \\) palavras, existe \\( n \\) palavras com um erro simples ( \\( d_h = 1 \\) ).
+
+Código de detecção de erro com um bit de paridade é quando o número de bits 1 na palavra de código seja par (ou ímpar) é codificado.
+
+Tal código tem \\( d_h = 2 \\), pois precisa de 2 erros simples para ir de uma palavra válida para uma outra palavra válida.
+Pode ser usado para se detectar um erro.
+
+
+---
+## Detecção e Correção de Erros: Hamming
+
+Para representar \\( 2^m \\) palavras utilizam-se \\( n = r+m \\) bits ( \\(r\\) bits além do necessário!)
+
+- \\( 2^{m+r} \\) : palavras possíveis
+- \\( 2^m \\) : palavras válidas
+- \\( (m+r)2^m \\): palavras inválidas a uma \\( d_h = 1 \\) de uma palavra válida
+
+Codificação de Hamming só gera palavras válidas, se e surgir alguma palavra inválida, trata-se de um erro que pode ser corrigido.
+
+---
+## Detecção e Correção de Erros: Hamming
+
+** Exemplo **
+
+Dado um conjunto de palavras de 3 bits.
+
+`000, 001, 010, 011, 100, 101, 110, 111`
+
+Quantos bits de redundância devemos utilizar?
+
+--
+
+\\( r = log_2 m + 1 \\)
+
+--
+
+Como \\( m  = 3 \\), logo, \\( r = log_2 3 + 1 \implies 1,5 + 1 \implies 2,5 \equiv 3 \\)
+
+--
+
+- \\( 2^{m+r} \implies 2^{3+3} = 2^6 = 64 \\) : palavras possíveis
+- \\( 2^m \implies 2^3 = 8 \\) : palavras válidas
+- \\( (m+r)2^m \implies (3+3)2^3 = 6*8 = 48 \\): palavras inválidas a uma \\( d_h = 1 \\) de uma palavra válida
+
+---
+## Detecção e Correção de Erros: Hamming
+
+** Exemplo **
+
+Como construir a codificação de Hamming?
+
+--
+
+Os bits de paridade/redundância estão nas posições \\( 2^0, 2^1, 2^2,...2^n \\)
+
+Como queremos codificar as palavras com 3 bits \\( (m) \\), teremos mais 3 bits de redundância \\( (r) \\), teremos no final uma palavra com 6 bits \\( (n) \\).
+
+A mensagem final será: \\( x_1 x_2 x_3 x_4 x_5 x_6 \\)
+
+Onde \\( x_1, x_2 \\) e \\( x_4 \\) serão os bits de redundância, e \\( x_3, x_5 \\) e \\( x_6 \\) os bits da mensagem.
+
+---
+## Detecção e Correção de Erros: Hamming
+
+** Exemplo **
+
+.hamming[![](assets/img/sl03/hamming01.png)]
+
+Como calcular \\( x_1, x_2 \\) e \\( x_4 \\)?
+
+--
+
+\\( x_1 = x_3 \oplus x_5 = 0 \oplus 0 = 0 \\)
+
+\\( x_2 = x_3 \oplus x_6 = 0 \oplus 0 = 0 \\)
+
+\\( x_4 = x_5 \oplus x_6 = 0 \oplus 0 = 0 \\)
+
+---
+## Detecção e Correção de Erros: Hamming
+
+** Exemplo **
+
+.hamming[![](assets/img/sl03/hamming02.png)]
+
+\\( x_1 = x_3 \oplus x_5 = 0 \oplus 0 = 0 \\)
+
+\\( x_2 = x_3 \oplus x_6 = 0 \oplus 0 = 0 \\)
+
+\\( x_4 = x_5 \oplus x_6 = 0 \oplus 0 = 0 \\)
+
+---
+## Detecção e Correção de Erros: Hamming
+
+** Exemplo **
+
+E para `101` ?
+
+.hamming[![](assets/img/sl03/hamming03.png)]
+
+--
+
+\\( x_1 = x_3 \oplus x_5 = 1 \oplus 0 = 1 \\)
+
+\\( x_2 = x_3 \oplus x_6 = 1 \oplus 1 = 0 \\)
+
+\\( x_4 = x_5 \oplus x_6 = 0 \oplus 1 = 1 \\)
+
+---
+## Detecção e Correção de Erros: Hamming
+
+** Exemplo **
+
+E para `101` ?
+
+.hamming[![](assets/img/sl03/hamming04.png)]
+
+---
+## Detecção e Correção de Erros: Hamming
+
+** Exemplo **
+
+Para todas as palavras de 3 bits temos:
+
+.hamming-3bit[![](assets/img/sl03/hamming05.png)]
+
+---
+## Detecção e Correção de Erros: Hamming
+
+** Exemplo **
+
+Para cada palavra existem \\( n \\) palavras de \\( d_h = 1 \\).
+
+\\( 000000 \implies 000001,000010,000100,001000,010000,100000 \\)
+
+\\( 010101 \implies 010100,010111,010001,011101,000101,110101 \\)
+
+...
+
+\\( 001011 \implies 001010,001001,001111,000011,011011,101011  \\)
+
+Com isto, temos \\( (m+r)2^m = (3+3)2^3 = 6*8 = 48 \\) palavras inválidas com \\( d_h = 1 \\) de uma válida.
+
+---
+## Detecção e Correção de Erros: Hamming
+
+** Exemplo **
+
+E no receptor, como funciona? Supondo que enviamos `010100`, qual bit esta errado?
+
+--
+
+No receptor, basta calcular os bits de redundância e somar. Caso a soma seja igual a 0, não há erros. Caso contrário, a própria soma indicará a posição a ser corrigida.
+
+---
+## Detecção e Correção de Erros: Hamming
+
+** Exemplo **
+
+`010100`
+
+\\( k_1 = x_1 \oplus x_3 \oplus x_5 = 0 \oplus 0 \oplus 0 = 0 \\)
+
+\\( k_2 = x_2 \oplus x_3 \oplus x_6 = 1 \oplus 0 \oplus 0 = 1 \\)
+
+\\( k_3 = x_4 \oplus x_5 \oplus x_6 = 1 \oplus 0 \oplus 0 = 1 \\)
+
+\\( k_3k_2k_1 = 110 = 6 \\)
+
+O erro esta no bit 6, logo a mensagem `010100` deveria ser `010101`
+
+---
+## Detecção e Correção de Erros: Hamming
+
+** Exemplo **
+
+E este código `001011` , contem erros?
+
+--
+
+\\( k_1 = x_1 \oplus x_3 \oplus x_5 = 0 \oplus 0 \oplus 0 = 0 \\)
+
+\\( k_2 = x_2 \oplus x_3 \oplus x_6 = 1 \oplus 1 \oplus 1 = 0 \\)
+
+\\( k_3 = x_4 \oplus x_5 \oplus x_6 = 0 \oplus 1 \oplus 1 = 0 \\)
+
+\\( k_3k_2k_1 = 000 \\), logo, não há erros!
+
+---
+## Detecção e Correção de Erros: Hamming
+
+### Hamming(7,4)
+
+É a mesma ideia que vimos até agora, aplicada para palavras com 4 bits.
+
+Assim, \\( r = log_2 m + 1 = log_24 + 1 = 3 \\).
+
+Então esta codificação tem \\( n = (m + r) = (4+3) = 7 \\).
+
+Por isto, no nome **Hamming(7,4)**.
+
+Assim, a mensagem final será: \\( x_1 x_2 x_3 x_4 x_5 x_6 x_7 \\)
+
+onde \\( x_1 x_2 \\) e \\( x_4 \\) representam os bits de paridade.
+
+---
+## Detecção e Correção de Erros: Hamming
+
+### Hamming(7,4)
+
+É possível trabalhar com a codificação através da seguinte representação gráfica:
+
+.hamming[![](assets/img/sl03/hamming06.png)]
+
+---
+## Detecção e Correção de Erros: Hamming
+
+### Hamming(7,4)
+
+Supondo que queremos codificar `1011`, então:
+
+--
+
+.hamming[![](assets/img/sl03/hamming07.png)]
+
+---
+## Detecção e Correção de Erros: Hamming
+
+### Hamming(7,4)
+
+.hamming[![](assets/img/sl03/hamming08.png)]
+
+---
+## Detecção e Correção de Erros: Hamming
+
+### Hamming(7,4)
+
+.hamming[![](assets/img/sl03/hamming09.png)]
+
+---
+## Detecção e Correção de Erros: Hamming
+
+### Hamming(7,4)
+
+.hamming[![](assets/img/sl03/hamming10.png)]
+
+Assim, `1011` é codificado em `0110011`
+
+---
+## Detecção e Correção de Erros: Hamming
+
+### Hamming(7,4)
+
+E a codificação de `1101`?
+
+--
+
+.hamming[![](assets/img/sl03/hamming11.png)]
+
+---
+## Detecção e Correção de Erros: Hamming
+
+.hamming2[![](http://www.computing.dcu.ie/~humphrys/Notes/Networks/tanenbaum/3-07.jpg)]
+
+
+---
+class: inverse, middle, center
+
+# Controle de Fluxo
+
+---
+## Controle de Fluxo
+
+### Protocolos básicos de enlace de dados
+
+Na camada física, na camada de enlace e na camada de rede existem processos independentes que se comunicam pelo envio de mensagens.
+
+.hamming[![](assets/img/sl03/enlace-protocolos.png)]
+
+---
+## Controle de Fluxo
+
+### Protocolos básicos de enlace de dados
+
+No que se refere à camada de enlace, o pacote repassado a ela pela camada de rede através da interface consiste em dados puros, em que cada bit deve ser entregue à camada de rede de destino.
+
+O fato de a camada de rede de destino interpretar parte do pacote como cabeçalho não tem nenhum interesse para a camada de enlace de dados.
+
+Quando a camada de enlace de dados aceita um pacote, ela o encapsula em um <b>quadro(frame)</b>, acrescentando-lhe um cabeçalho e um final de enlace de dados. Portanto, ele consiste em:
+
+--
+* Informações de controle (cabeçalho)
+--
+
+* Checksum (no final)
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex sem restrições
+
+- Não se preocupa com a possibilidade de algo sair errado.
+- Os dados são transmitidos em apenas um sentido.
+- As camadas de rede do transmissor estão sempre prontas.
+- O espaço disponível no buffer é infinito.
+- Nunca perde pacotes.
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex sem restrições
+
+![](assets/img/sl03/simplex01.png)
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex sem restrições
+
+![](assets/img/sl03/simplex00.png)
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex Stop-and-Wait
+
+- Controle de fluxo
+- Canal continua livre de erros
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex Stop-and-Wait
+
+![](assets/img/sl03/simplex-stop-wait.png)
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex Stop-and-Wait
+
+![](assets/img/sl03/simplex-stop-wait01.png)
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex Stop-and-Wait com ruídos
+
+- Agora podem ocorrer erros
+- Retransmissão de quadros errados
+- Receptor deve saber distinguir se o quadro foi duplicado, logo, utiliza numeração
+
+O transmissor passa para o próximo quadro apenas depois de receber uma confirmação (`ACK`) da última sequência enviada;
+
+O receptor apenas aceita quadros com a próxima sequência esperada.
+
+Um temporizador é usado no transmissor para não ficar em deadlock.
+
+Neste exemplo, apenas um bit é necessário.
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex Stop-and-Wait com ruídos
+
+![](assets/img/sl03/simplex-ruido01.png)
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex Stop-and-Wait com ruídos
+
+![](assets/img/sl03/simplex-ruido02.png)
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex Stop-and-Wait com ruídos
+
+![](assets/img/sl03/simplex-ruido03.png)
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex Stop-and-Wait com ruídos
+
+![](assets/img/sl03/simplex-ruido04.png)
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex Stop-and-Wait com ruídos
+
+.simplex[![](assets/img/sl03/simplex-ruido05.png)]
+
+---
+## Controle de Fluxo
+
+### Protocolo simplex Stop-and-Wait com ruídos
+
+- Quadros de dados são transmitidos em apenas um sentido (simplex)
+- O transmissor precisa esperar a confirmação do último quadro enviado para poder enviar um novo quadro, este tempo de espera pode ser significativo, deixando o canal ocioso
+- Estes protocolos são bons para introduzir o assunto, mas em situações práticas são pouco usuais</li>
+
+---
+## Controle de Fluxo
+
+### Janela deslizante (Sliding Windows)
+
+- Mecanismo de controle de fluxo e otimização
+- O transmissor tem um limite de quadros para enviar segundo um parâmetro L que estabelece sua janela de transmissão
+- Após o envio de \\( L \\) quadros sem receber nenhum `ACK` (acknowledge) o transmissor interrompe o envio de quadros e inicializa um temporizador para o frame perdido
+
+---
+## Controle de Fluxo
+
+### Janela deslizante (Sliding Windows)
+
+#### Go Back N
+
+![](assets/img/sl03/go-back-n.gif)
+
+
+---
+## Controle de Fluxo
+
+### Janela deslizante (Sliding Windows)
+
+#### Retransmissão Seletiva
+
+![](assets/img/sl03/selective.gif)
+
+---
+class: inverse, middle, center
+
+# Protocolos
+
+---
+## Protocolos
+
+### HDLC (High-Level Data Link Control)
+- Padronizada pela ISO em 1979 (pai de todos os protocolos de nível 2)
+  * Orientado a bit
+  * Sequência
+  * CRC
+- Outros protocolos de diferentes arquiteturas foram definidas utilizando subconjuntos funcionais do HDLC: LLC (IEEE-802.2/Redes locais), LAP-B (Redes X.25), LAD-D (Redes ISDN), LAP-M (Modems)
+
+---
+## Protocolos
+
+### PPP (Point to Point Protocol)
+
+- IETF - RFC's 1661, 1662, 1663,...
+- Suporta múltiplos protocolos
+- Detecção e correção de erros
+- Negociação e atribuição dinâmica de endereços IP
+- Autenticação
+- Usado no acesso DIAL UP do Windows
+- Configuração de enlace de dados e testes da qualidade do 	link
+- Multiplexação do protocolo de rede
+- negociações de compactação de dados
+
+---
+## Protocolos
+
+### PPP (Point to Point Protocol)
+
+- Utilizado para ligações ponto a ponto em links seriais
+- O PPP usa o HDLC como base para encapsular datagramas
+
+![](assets/img/sl03/ppp01.png)
+
+
+---
+class: bg-pic
+background-image: url(http://i.giphy.com/upg0i1m4DLe5q.gif)
+
+
+    </textarea>
+    <script src="assets/js/remark.min.js">
+    </script>
+    <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    <script>
+    var slideshow = remark.create({
+        highlightStyle: 'monokai',
+        highlightLanguage: 'remark',
+        highlightLines: true
+    });
+
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+    </script>
+  </body>
+</html>
